@@ -11,7 +11,10 @@ const Login = () => {
         {/* <Text>Username</Text> */}
         <TextInput style={styles.textInput} placeholder='Username'/>
         {/* <Text>Password</Text> */}
+        <View>
         <TextInput style={styles.textInput} placeholder='Password'/>
+        
+        </View>
         <View style={styles.viewRemember}>
             {/* <BouncyCheckbox fillColor='#1877f2' text='Remember me' textStyle={{textDecorationLine: 'none'}}/> */}
             <Text style={{color:'#000', fontWeight: '500'}}>Forgot the password ?</Text>
@@ -97,6 +100,7 @@ const styles = StyleSheet.create({
         marginBottom:20
     },
     textInput:{
+        width:'100%',
         height:55,
         borderRadius:100,
         borderWidth:1,
