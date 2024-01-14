@@ -67,7 +67,6 @@ export default SignUp
 const styles = StyleSheet.create({
     viewPass:{
         flexDirection:'row',
-        flex:1
     },
     imgEyes:{
         position:'absolute',
