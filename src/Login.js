@@ -1,39 +1,56 @@
-import { StyleSheet, Text, View, Image, TextInput, Pressable } from 'react-native'
-import React from 'react'
+import { StyleSheet, Text, View, Image, TextInput, Pressable, TouchableOpacity } from 'react-native'
+import React, { useState } from 'react'
 import BouncyCheckbox from 'react-native-bouncy-checkbox'
 
 const Login = () => {
+    const [hiddenPass, setHiddenPass] = useState(true)
   return (
     <View style={styles.container}>
         <View style={styles.viewImg}>
             <Image source={require('../assets/images/logoLogin.png')}/>
         </View>
+
         {/* <Text>Username</Text> */}
         <TextInput style={styles.textInput} placeholder='Username'/>
         {/* <Text>Password</Text> */}
-        <TextInput style={styles.textInput} placeholder='Password'/>
+
+        <View style={styles.viewPass}>
+            <TextInput style={styles.textInput} placeholder='Password' secureTextEntry={hiddenPass}/>
+            <TouchableOpacity style={styles.imgEyes} onPress={()=> setHiddenPass(!hiddenPass)}>
+                {
+                hiddenPass ? <Image  source={require('../assets/images/eyes.png')}/>: <Image source={require('../assets/images/eyes.png')}/>
+                }
+            </TouchableOpacity>
+        </View>
+
         <View style={styles.viewRemember}>
             {/* <BouncyCheckbox fillColor='#1877f2' text='Remember me' textStyle={{textDecorationLine: 'none'}}/> */}
             <Text style={{color:'#000', fontWeight: '500'}}>Forgot the password ?</Text>
         </View>
+
         <Pressable style={styles.btnLogin}>
             <Text style={styles.textLogin}>Login</Text>
         </Pressable>
+
         <View style={styles.viewOr}>
-        <Text style={styles.textOr}>or continue with</Text>
+            <Text style={styles.textOr}>or continue with</Text>
         </View>
+
         <Pressable style={styles.btnSocial}>
             <Image source={require('../assets/images/icon_gg.png')} style={styles.imgIcon}/>
             <Text style={styles.textSocial}>Login with Google</Text>
         </Pressable>
+
         <Pressable style={styles.btnSocial}>
             <Image source={require('../assets/images/icon_fb.png')} style={styles.imgIcon}/>
             <Text style={styles.textSocial}>Login with Facebook</Text>
         </Pressable>
+
         <View style={styles.viewSign}>
             <Text>Don’t have an account? </Text>
             <Text style={styles.textBold}>Sign up</Text>
         </View>
+
     </View>
   )
 }
@@ -41,6 +58,14 @@ const Login = () => {
 export default Login
 
 const styles = StyleSheet.create({
+    viewPass:{
+        flexDirection:'row'
+    },
+    imgEyes:{
+        position:'absolute',
+        top:23,
+        right:25,
+    },
     textBold:{
         fontWeight:'bold',
         color:'#000'
@@ -97,6 +122,7 @@ const styles = StyleSheet.create({
         marginBottom:20
     },
     textInput:{
+        width:'100%',
         height:55,
         borderRadius:100,
         borderWidth:1,
