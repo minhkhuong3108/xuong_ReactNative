@@ -80,7 +80,7 @@ const styles = StyleSheet.create({
         marginTop:40
     },
     txtSubHead:{
-        marginTop:10,
+        marginTop:13,
         fontSize:14,
         textAlign:'center',
         color:'#000'
