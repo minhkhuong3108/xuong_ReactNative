@@ -17,7 +17,7 @@ function App(): React.JSX.Element {
   return (
     // <Login/>
     // <SignUp/>
-    <Welcome/>
+    <Welcome />
   );
 }
 
