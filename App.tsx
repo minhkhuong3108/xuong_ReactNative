@@ -11,15 +11,18 @@ import Login from './src/Login';
 import SignUp from './src/SignUp';
 import Welcome from './src/Welcome';
 import Home from './src/Home';
+import Foodoo from './src/Foodoo';
+
 
 
 function App(): React.JSX.Element {
 
   return (
-    // <Login/>
-    // <SignUp/>
+    // <Login />
+    // <SignUp />
     // <Welcome />
-    <Home/>
+    // <Home />
+    <Foodoo />
   );
 }
 
