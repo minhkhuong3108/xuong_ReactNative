@@ -10,6 +10,7 @@ import {
 import Login from './src/Login';
 import SignUp from './src/SignUp';
 import Welcome from './src/Welcome';
+import Home from './src/Home';
 
 
 function App(): React.JSX.Element {
@@ -17,7 +18,8 @@ function App(): React.JSX.Element {
   return (
     // <Login/>
     // <SignUp/>
-    <Welcome />
+    // <Welcome />
+    <Home/>
   );
 }
 
