@@ -11,6 +11,8 @@ import Login from './src/Login';
 import SignUp from './src/SignUp';
 import Welcome from './src/Welcome';
 import Home from './src/Home';
+import { NavigationContainer } from '@react-navigation/native';
+import AppStack from './src/navigation/AppStack';
 
 
 function App(): React.JSX.Element {
@@ -19,7 +21,8 @@ function App(): React.JSX.Element {
     // <Login/>
     // <SignUp/>
     // <Welcome />
-    <Home/>
+    // <Home/>
+      <AppStack/>
   );
 }
 

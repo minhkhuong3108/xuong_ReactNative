@@ -5,23 +5,76 @@ const Home = () => {
   const [search, setSearch] = useState('')
 
   const [category, setCatogery] = useState(loai)
-  const renderItem = ({ item, index }) => {
+  const renderItemCategory = ({ item, index }) => {
     const { id, name, img } = item
     return (
       <View style={[styles.viewCategory, index ===category.length-1  && styles.itemLast]} >
-        <Pressable style={styles.btnCategory}>
+        <TouchableOpacity style={styles.btnCategory}>
           <Image source={img} />
-        </Pressable>
-        <Text>{name}</Text>
+        </TouchableOpacity>
+        <Text style={styles.txtNameCatogory}>{name}</Text>
       </View>
 
+    )
+  }
+
+  const [feature, setFeature] = useState(sanPhamTuongLai)
+  const [favorited, setFavorited] = useState(0)
+  const renderItemFeature=({item, index}) =>{
+    const {id, name, price, ship, rate, sale, img} = item
+    return(
+      <View style={[styles.viewFeature, index ===feature.length-1 && styles.itemLast]}>
+        <View style={styles.viewSale}>
+          <Text style={styles.txtSale}>{sale}</Text>
+        </View>
+
+        <TouchableOpacity style={styles.btnFavorite} onPress={()=>{setFavorited(id)}}>
+          {
+            id === favorited ? <Image style={styles.imgFavorite} source={require('../assets/images/home/product_feature/favorite.png')}/> 
+            : <Image style={styles.imgFavorite} source={require('../assets/images/home/product_feature/no_favorite.png')}/>
+
+          }
+        </TouchableOpacity>
+
+        <Image source={img} style={styles.imgFeature}/>
+
+        <View style={styles.viewDesFeature}>
+          <View style={styles.viewNameFeature}>
+            <Text style={styles.txtNameFeature}>{name}</Text>
+            <Text style={styles.txtPriceFeature}>${price} {ship}</Text>
+          </View>
+
+          <View style={styles.viewRate}>
+            <Text style={styles.txtRate}>{rate}</Text>
+          </View>
+        </View>
+      </View>
+    )
+  }
+
+  const [hot, setHot]= useState(sanPhamHot)
+  const renderItemHot =({item, index})=>{
+    const {id, name, price, img}= item
+    return(
+      <View style={[styles.viewHot, index===hot.length-1&& styles.itemLast]}>
+        <View style={styles.viewImgHot}>
+          <Image source={img}/>
+        </View>
+        <View style={styles.viewSubHot}>       
+          <Text style={styles.txtNameHot}>{name}</Text>
+          <Text style={styles.txtPriceHot}>
+            <Text style={{color:'#FFC532'}}>$</Text>
+            {price}
+          </Text>
+        </View>
+      </View>
     )
   }
   return (
     <View style={styles.container}>
       <View style={styles.viewHeader}>
         <View style={styles.viewTxtHead}>
-          <Text>Deliver now</Text>
+          <Text style={styles.txtHead}>Deliver now</Text>
           <View style={styles.viewSubText}>
             <Text style={styles.txtHeadBold}>Madni Town</Text>
             <Image source={require('../assets/images/home/down.png')} />
@@ -53,13 +106,53 @@ const Home = () => {
         />
       </View>
 
-      <FlatList
-      horizontal
-      showsHorizontalScrollIndicator={false}
-      data={category}
-      renderItem={renderItem}
-      key={item => item.id}
-      />
+      <View>
+        <FlatList
+        horizontal={true}
+        showsHorizontalScrollIndicator={false}
+        data={category}
+        renderItem={renderItemCategory}
+        key={item => item.id}
+        />
+      </View>
+      
+
+      <View style={styles.viewMenu}>
+        <Text style={styles.txtMenu}>Featured on Super Foodoo</Text>
+
+        <TouchableOpacity style={styles.btnMenu}>
+          <Image source={require('../assets/images/home/right.png')}/>
+        </TouchableOpacity>
+      </View>
+
+      <View>
+        <FlatList
+        horizontal
+        showsHorizontalScrollIndicator={false}
+        data={feature}
+        renderItem={renderItemFeature}
+        key={item => item.key}
+        />
+      </View>
+
+      <View style={styles.viewMenu}>
+        <Text style={styles.txtMenu}>Hot spots</Text>
+
+        <TouchableOpacity style={styles.btnMenu}>
+          <Image source={require('../assets/images/home/right.png')}/>
+        </TouchableOpacity>
+      </View>
+
+      <View>
+        <FlatList
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          data={hot}
+          renderItem={renderItemHot}
+          key={item => item.id}
+        />
+      </View>
+
 
     </View>
   )
@@ -68,8 +161,130 @@ const Home = () => {
 export default Home
 
 const styles = StyleSheet.create({
+  txtNameHot:{
+    fontSize:16,
+    fontWeight:'bold',
+    marginBottom:10,
+    color:'#000',
+  },
+  txtPriceHot:{
+    marginBottom:13,
+    fontWeight:'bold',
+    color:'#000',
+    fontSize:17
+  },  
+  viewImgHot:{
+    width:156,
+    height:50,
+    zIndex:1,
+    alignItems:'center',
+  },
+  viewSubHot:{
+    width:159,
+    height:133,
+    elevation:3,
+    backgroundColor:'#fff',
+    justifyContent:'flex-end',
+    alignItems:'center',
+    borderRadius:10
+  },
+  viewHot:{
+    flexDirection:'column',
+    marginRight:40,
+    height:208,
+  },  
+  imgFavorite:{
+    width:22,
+    height:22,
+
+  },
+  btnFavorite:{
+    position:'absolute',
+    zIndex:1,
+    right:10,
+    top:9
+  },
+  txtSale:{
+    fontSize:12,
+    fontWeight:'bold',
+    color:'#000',
+  },
+  viewSale:{
+    position:'absolute',
+    height:19,
+    backgroundColor:'#FFDD22',
+    borderTopRightRadius:10,
+    borderBottomRightRadius:10,
+    zIndex:1,
+    top:15,
+    left:0,
+    paddingHorizontal:8
+  },  
+  txtRate:{
+    fontSize:12,
+    fontWeight:'bold',
+    color:'#000',
+  },
+  viewRate:{
+    width:31,
+    height:28,
+    justifyContent:'center',
+    alignItems:'center',
+    backgroundColor:'#EAEAEA',
+    borderRadius:31/2
+  },  
+  txtPriceFeature:{
+    fontSize:12
+  },  
+  txtNameFeature:{
+    fontSize:17,
+    fontWeight:'bold',
+    color:'#000',
+  },  
+  viewNameFeature:{
+    flexDirection:'column'
+  },
+  viewDesFeature:{
+    flexDirection:'row',
+    justifyContent:'space-between',
+    alignItems:'center',
+    marginTop:10
+  },
+  imgFeature:{
+    width:255,
+    height:143,
+    borderRadius:10
+  },
+  viewFeature:{
+    flexDirection:'column',
+    marginRight:17,
+  },  
+  btnMenu:{
+    width:31, 
+    height:27,
+    backgroundColor:'#EAEAEA',
+    justifyContent:'center',
+    alignItems:'center',
+    borderRadius:31/2
+  },
+  txtMenu:{
+    fontWeight:'bold',
+    fontSize:22,
+    color:'#000',
+  },
+  viewMenu:{
+    flexDirection:'row',
+    justifyContent:'space-between',
+    alignItems:'center',
+    marginTop:15,
+    marginBottom:17
+  },
   itemLast:{
     marginRight:0
+  },
+  txtNameCatogory:{
+    color:'#000',
+    fontSize:16
   },
   btnCategory:{
     width:80,
@@ -122,10 +337,15 @@ const styles = StyleSheet.create({
     borderRadius: 25,
     flexDirection: 'row',
   },
+  txtHead:{
+    color:'#000',
+    fontSize:16
+  },
   txtHeadBold: {
     fontWeight: 'bold',
     fontSize: 16,
-    marginRight: 5
+    marginRight: 5,
+    color:'#000',
   },
   viewSubText: {
     flexDirection: 'row',
@@ -145,6 +365,51 @@ const styles = StyleSheet.create({
     padding: 20
   }
 })
+
+var sanPhamHot=[
+  {
+    'id': 'hot1',
+    'name': 'Mc Double',
+    'price': 20.99,
+    'img': require('../assets/images/home/product_hot/product1.png')
+  },
+
+  {
+    'id': 'hot2',
+    'name': 'Supreme Pizza',
+    'price': 15.99,
+    'img': require('../assets/images/home/product_hot/product2.png')
+  },
+
+  {
+    'id': 'hot3',
+    'name': 'Chicken Wings',
+    'price': 25.99,
+    'img': require('../assets/images/home/product_hot/product3.png')
+  }
+]
+
+var sanPhamTuongLai=[
+  {
+    'id': 'ft1',
+    'name': 'McDonald’s(Best Offer)',
+    'price': 4.99,
+    'ship': 'Delivery Fee . 15-30 min',
+    'sale': 'Free Item(Spend $10)',
+    'rate': 4.5,
+    'img': require('../assets/images/home/product_feature/product1.png')
+  },
+
+  {
+    'id': 'ft2',
+    'name': 'Supreme Pizza',
+    'price': 2.99,
+    'ship': 'Delivery Fee . 15-30 min',
+    'sale': 'Buy 1 Get 1 Free',
+    'rate': 4.4,
+    'img': require('../assets/images/home/product_feature/product2.png')
+  }
+]
 
 var loai = [
   {
