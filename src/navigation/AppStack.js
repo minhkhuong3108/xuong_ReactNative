@@ -6,6 +6,7 @@ import Login from '../Login';
 import SignUp from '../SignUp';
 import Welcome from '../Welcome';
 import Home from '../Home';
+import Foodoo from '../Foodoo';
 const Stack = createNativeStackNavigator();
 
 const AppStack = () => {
@@ -16,6 +17,7 @@ const AppStack = () => {
             <Stack.Screen name='Login' component={Login}/>
             <Stack.Screen name='Sign up' component={SignUp}/>
             <Stack.Screen name='Home' component={Home}/>
+            <Stack.Screen name='ProductHot' component={Foodoo}/>
         </Stack.Navigator>
     </NavigationContainer>
   )

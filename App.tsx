@@ -26,6 +26,7 @@ function App(): React.JSX.Element {
     // <Home/>
       <AppStack/>
     // <Home />
+    // <Foodoo/>
   )
 }
 

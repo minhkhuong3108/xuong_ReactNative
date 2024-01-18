@@ -1,7 +1,10 @@
 import { FlatList, Image, Pressable, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
 import React, { useState } from 'react'
 
-const Home = () => {
+const Home = ({navigation}) => {
+  const pressHot=()=>{
+    navigation.navigate('ProductHot')
+  }
   const [search, setSearch] = useState('')
 
   const [category, setCatogery] = useState(loai)
@@ -138,7 +141,7 @@ const Home = () => {
       <View style={styles.viewMenu}>
         <Text style={styles.txtMenu}>Hot spots</Text>
 
-        <TouchableOpacity style={styles.btnMenu}>
+        <TouchableOpacity style={styles.btnMenu} onPress={pressHot}>
           <Image source={require('../assets/images/home/right.png')}/>
         </TouchableOpacity>
       </View>

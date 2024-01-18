@@ -11,7 +11,7 @@ const FoodooItem = (props) => {
     let { name, price, url } = props.foods
     const { onPress } = props
     return (
-        <TouchableOpacity
+        <View
             onPress={onPress}
             style={styles.container}>
             <View style={styles.Class3}>
@@ -24,7 +24,7 @@ const FoodooItem = (props) => {
                     </View>
                 </View>
             </View>
-        </TouchableOpacity>
+        </View>
 
     )
 }
