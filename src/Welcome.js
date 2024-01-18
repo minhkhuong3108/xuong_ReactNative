@@ -1,7 +1,14 @@
 import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import React from 'react'
 
-const Welcome = () => {
+const Welcome = ({navigation}) => {
+  const pressLogin=()=>{
+    navigation.navigate('Login')
+  }
+
+  const pressSignUp=()=>{
+    navigation.navigate('Sign up')
+  }
   return (
     <View style={styles.container}>
       <View style={styles.viewImg}>
@@ -11,11 +18,11 @@ const Welcome = () => {
       <Text style={styles.txtHeading}>Welcome to Super Foodo</Text>
       <Text style={styles.txtSubHead}>Lorem ipsum dolor sit amet consectetur. Ut cras pellentesque </Text>
 
-      <TouchableOpacity style={styles.btnSign}>
+      <TouchableOpacity style={styles.btnSign} onPress={pressSignUp}>
         <Text style={styles.txtBtn}>Create account</Text>
       </TouchableOpacity>
 
-      <TouchableOpacity style={styles.btnLogin}>
+      <TouchableOpacity style={styles.btnLogin} onPress={pressLogin}>
         <Text style={styles.txtBtn}>Login</Text>
       </TouchableOpacity>
 

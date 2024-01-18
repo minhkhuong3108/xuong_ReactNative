@@ -1,10 +1,20 @@
 import { StyleSheet, Text, View, Image, TextInput, Pressable, TouchableOpacity } from 'react-native'
 import React, { useState } from 'react'
-import BouncyCheckbox from 'react-native-bouncy-checkbox'
+import { NavigationContainer } from '@react-navigation/native';
+// khai báo stack
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
-const Login = () => {
+const Login = ({navigation}) => {
+    const handlePress = ()=>{
+        navigation.navigate('Sign up')
+    }
+    
+    const pressHome=()=>{
+        navigation.navigate('Home')
+    }
     const [hiddenPass, setHiddenPass] = useState(true)
   return (
+    
     <View style={styles.container}>
         <View style={styles.viewImg}>
             <Image source={require('../assets/images/logoLogin.png')}/>
@@ -28,7 +38,7 @@ const Login = () => {
             <Text style={{color:'#000', fontWeight: '500'}}>Forgot the password ?</Text>
         </View>
 
-        <Pressable style={styles.btnLogin}>
+        <Pressable style={styles.btnLogin} onPress={pressHome}>
             <Text style={styles.textLogin}>Login</Text>
         </Pressable>
 
@@ -48,7 +58,7 @@ const Login = () => {
 
         <View style={styles.viewSign}>
             <Text>Don’t have an account? </Text>
-            <Text style={styles.textBold}>Sign up</Text>
+            <Text style={styles.textBold} onPress={handlePress}>Sign up</Text>
         </View>
 
     </View>

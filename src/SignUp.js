@@ -2,7 +2,10 @@ import { StyleSheet, Text, View, Image, TextInput, Pressable, TouchableOpacity }
 import React, { useState } from 'react'
 import BouncyCheckbox from 'react-native-bouncy-checkbox'
 
-const SignUp = () => {
+const SignUp = ({navigation}) => {
+    const handlePress = ()=>{
+        navigation.navigate('Login')
+    }
     const [hiddenPass, setHiddenPass] = useState(true)
     const [hiddenRePass, setHiddenRePass] = useState(true)
   return (
@@ -56,7 +59,7 @@ const SignUp = () => {
 
         <View style={styles.viewLogin}>
             <Text>Don’t have an account? </Text>
-            <Text style={styles.textBold}>Log in</Text>
+            <Text style={styles.textBold} onPress={handlePress}>Log in</Text>
         </View>
     </View>
   )

@@ -8,8 +8,11 @@ import { Alert } from 'react-native';
 import FoodooItem from './FoodooItem';
 
 
-function Foodoo(props) {
+function Foodoo({navigation}) {
 
+    const backHome=()=>{
+        navigation.goBack()
+    }
     const [foods, setFoods] = useState([
         { id: 1, url: 'https://mcdonalds.vn/uploads/2018/food/burgers/bigmac_bb.png', name: "Extra Meat Burger", price: 9.99 },
         { id: 2, url: 'https://mcdonalds.vn/uploads/2018/food-categories/TIRAMISU.png', name: "Tiramisu Cake", price: 4.45 },
@@ -45,10 +48,13 @@ function Foodoo(props) {
         <View style={styles.container}>
             <View style={styles.Class1}>
                 <Text style={styles.title}> Hot spots</Text>
-                <Image
-                    style={styles.icon}
+                <TouchableOpacity onPress={backHome}
+                    style={styles.icon}>
+                <Image 
                     source={icons.muiTen}
                 />
+                </TouchableOpacity>
+                
             </View>
 
             <View style={styles.Class2}
