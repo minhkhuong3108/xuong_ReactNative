@@ -14,6 +14,7 @@ import Home from './src/Home';
 import { NavigationContainer } from '@react-navigation/native';
 import AppStack from './src/navigation/AppStack';
 import Foodoo from './src/Foodoo';
+import ProductDetails from './src/ProductDetails';
 
 
 
@@ -25,6 +26,7 @@ function App(): React.JSX.Element {
     // <Welcome />
     // <Home/>
       <AppStack/>
+      // <ProductDetails/>
     // <Home />
     // <Foodoo/>
   )

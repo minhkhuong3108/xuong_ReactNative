@@ -1,22 +1,22 @@
 import {
     Text, View, Image, ImageBackground,
     TouchableOpacity, TextInput, KeyboardAvoidingView,
-    Keyboard, Platform, ScrollView, FlatList, StyleSheet
+    Keyboard, Platform, ScrollView, FlatList, StyleSheet, Pressable
 } from 'react-native';
 import React, { useState, useEffect, } from 'react';
 import { images, icons, } from '../constants';
 import { UIButton } from '../components';
 import { Alert } from 'react-native';
 const FoodooItem = (props) => {
-    let { name, price, url } = props.foods
+    let { name, price, img } = props.foods
     const { onPress } = props
     return (
-        <View
+        <Pressable
             onPress={onPress}
             style={styles.container}>
             <View style={styles.Class3}>
                 <View style={styles.item}>
-                    <Image source={{ uri: url }}
+                    <Image source={img}
                         style={styles.imageItem} />
                     <View style={styles.ClassChild}>
                         <Text style={styles.nameItem}>{name}</Text>
@@ -24,7 +24,7 @@ const FoodooItem = (props) => {
                     </View>
                 </View>
             </View>
-        </View>
+        </Pressable>
 
     )
 }
@@ -35,10 +35,10 @@ const styles = StyleSheet.create({
         alignItems: 'center', marginTop: 70
     },
     imageItem: {
-        width: '100%',
-        height: '110%',
+        width: 170,
+        height:113,
         position: 'absolute',
-        bottom: 60,
+        bottom: 70,
         resizeMode: 'contain',
 
     },
@@ -63,7 +63,7 @@ const styles = StyleSheet.create({
         shadowRadius: 4,
         elevation: 8,
         marginBottom: 20,
-
+        alignItems:'center'
     },
     Class3: {
         flexDirection: 'row',
