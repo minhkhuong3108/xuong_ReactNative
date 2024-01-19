@@ -13,26 +13,30 @@ function Foodoo({navigation}) {
     const backHome=()=>{
         navigation.goBack()
     }
+
+    const pressProductDetails=()=>{
+        navigation.navigate('ProductDetails')
+    }
     const [foods, setFoods] = useState([
-        { id: 1, url: 'https://mcdonalds.vn/uploads/2018/food/burgers/bigmac_bb.png', name: "Extra Meat Burger", price: 9.99 },
-        { id: 2, url: 'https://mcdonalds.vn/uploads/2018/food-categories/TIRAMISU.png', name: "Tiramisu Cake", price: 4.45 },
-        { id: 3, url: 'https://mcdonalds.vn/uploads/2018/food-categories/croissant.png', name: "Croissant", price: 3.25 },
-        { id: 4, url: 'https://mcdonalds.vn/uploads/2018/food-categories/CHOCO-BROWNIE.png', name: "Chocolate Cake", price: 5.29 },
-        { id: 5, url: 'https://mcdonalds.vn/uploads/2018/food-categories/yogurt-dau.png', name: "Yogurl StrawBerry", price: 10.59 },
-        { id: 6, url: 'https://mcdonalds.vn/uploads/2018/food/desserts/hotfudge_mcsundae.png', name: "Ice-cream Chocolate", price: 3.99 },
-        { id: 7, url: 'https://mcdonalds.vn/uploads/2018/food/beverage/hero-pdt-Fanta-201703_0.png', name: "Fanta", price: 4.99 },
-        { id: 8, url: 'https://mcdonalds.vn/uploads/2018/food/beverage/mcd-food-beverages-soft-drinks-coke.png', name: "Coca-Cola", price: 3.99 },
-        { id: 9, url: 'https://mcdonalds.vn/uploads/2018/food/beverage/dasani_water.png', name: "Water", price: 2.99 },
-        { id: 10, url: 'https://mcdonalds.vn/uploads/2018/food-categories/yogurt-kiwi.png', name: "Yogurl kiwi", price: 10.99 },
-        { id: 11, url: 'https://mcdonalds.vn/uploads/2018/mccafe/hotmatcha.png', name: "Matcha-latte Hot", price: 5.99 },
-        { id: 12, url: 'https://mcdonalds.vn/uploads/2018/mccafe/cappucino.png', name: "Capuchino Hot", price: 5.99 },
-        { id: 13, url: 'https://mcdonalds.vn/uploads/2018/mccafe/americano.png', name: "Americano Hot", price: 5.99 },
-        { id: 14, url: 'https://mcdonalds.vn/uploads/2018/mccafe/hotchoco.png', name: "Chocolate Hot ", price: 5.99 },
-        { id: 15, url: 'https://mcdonalds.vn/uploads/2018/mccafe/hotlatte.png', name: "Latte Hot", price: 5.99 },
-        { id: 16, url: 'https://mcdonalds.vn/uploads/2018/mccafe/mocha.png', name: "Mocha Hot", price: 5.99 },
-        { id: 17, url: 'https://mcdonalds.vn/uploads/2018/food-categories/CSO_MilkCreamTea_S.png', name: " Milk Cream Tea", price: 4.99 },
-        { id: 18, url: 'https://mcdonalds.vn/uploads/2018/mccafe/tacmuoi.png', name: "Soot clogging", price: 8.99 },
-        { id: 19, url: 'https://mcdonalds.vn/uploads/2018/food/burgers/sausagebg_bb.png', name: "Burger Sausage", price: 2.99 },
+        { id: 1, img: require('../assets/images/product/product1.png'), name: "Extra Meat Burger", price: 9.99 },
+        { id: 2, img: require('../assets/images/product/product2.png'), name: "Supreme Pizza", price: 4.45 },
+        { id: 3, img: require('../assets/images/product/product3.png'), name: "Chicken Wings", price: 3.25 },
+        { id: 4, img: require('../assets/images/product/product4.png'), name: "Berry cake", price: 5.29 },
+        { id: 5, img: require('../assets/images/product/product5.png'), name: "Ramen", price: 10.59 },
+        { id: 6, img: require('../assets/images/product/product6.png'), name: "Ice-cream", price: 3.99 },
+        { id: 7, img: require('../assets/images/product/product7.png'), name: "Straw Berry cake", price: 4.99 },
+        { id: 8, img: require('../assets/images/product/product8.png'), name: "Sausage Scotland", price: 3.99 },
+        // { id: 9, img: require('../assets/images/product/product2'), name: "Water", price: 2.99 },
+        // { id: 10, img: require('../assets/images/product/product2'), name: "Yogimg require('../assets/images/product/product2')", price: 10.99 },
+        // { id: 11, img: require('../assets/images/product/product2'), name: "Matcha-latte Hot", price: 5.99 },
+        // { id: 12, img: require('../assets/images/product/product2'), name: "Capuchino Hot", price: 5.99 },
+        // { id: 13, img: require('../assets/images/product/product2'), name: "Americano Hot", price: 5.99 },
+        // { id: 14, img: require('../assets/images/product/product2'), name: "Chocolate Hot ", price: 5.99 },
+        // { id: 15, img: require('../assets/images/product/product2'), name: "Latte Hot", price: 5.99 },
+        // { id: 16, img: require('../assets/images/product/product2'), name: "Mocha Hot", price: 5.99 },
+        // { id: 17, img: require('../assets/images/product/product2'), name: " Milk Cream Tea", price: 4.99 },
+        // { id: 18, img: require('../assets/images/product/product2'), name: "Soot clogging", price: 8.99 },
+        // { id: 19, img: require('../assets/images/product/product2'), name: "Burger Sausage", price: 2.99 },
 
     ])
     // Khởi tạo state cho giá trị đang nhập (searchText) và trạng thái người dùng đã bắt đầu nhập hay chưa (userStartedTyping)
@@ -61,7 +65,7 @@ function Foodoo({navigation}) {
             >
                 <Image
                     style={styles.iconSearch}
-                    source={icons.search} />
+                    source={require('../assets/images/home/search.png')} />
                 <TextInput
                     autoCorrect={false}
                     onChangeText={(item) => {
@@ -96,9 +100,7 @@ function Foodoo({navigation}) {
                         numColumns={2} //phân thành 2 cột
                         renderItem={({ item }) =>
                             <FoodooItem
-                                onPress={() => {
-                                    Alert.alert(`Bạn đã chon ${item.name}`)
-                                }}
+                                onPress={pressProductDetails}
                                 foods={item}
                                 key={item.name} />}
                         keyExtractor={eachFood => eachFood.name}
@@ -155,13 +157,13 @@ const styles = StyleSheet.create({
         height: 30,
         width: 30,
         marginRight: 15,
-        marginTop: 12
+        // marginTop: 12
     },
     iconSearch: {
         position: 'absolute',
         height: 26,
         width: 26,
-        marginLeft: 25,
+        marginLeft: 15,
         marginTop: 12
     },
     Class2: {
@@ -171,6 +173,7 @@ const styles = StyleSheet.create({
         height: 54,
         borderRadius: 100,
         backgroundColor: '#E5E5E575',
+        alignItems:'center'
     },
     icon: {
         right: 230

@@ -5,6 +5,10 @@ const Home = ({navigation}) => {
   const pressHot=()=>{
     navigation.navigate('ProductHot')
   }
+
+  const pressProductDetails=()=>{
+    navigation.navigate('ProductDetails')
+  }
   const [search, setSearch] = useState('')
 
   const [category, setCatogery] = useState(loai)
@@ -59,7 +63,7 @@ const Home = ({navigation}) => {
   const renderItemHot =({item, index})=>{
     const {id, name, price, img}= item
     return(
-      <View style={[styles.viewHot, index===hot.length-1&& styles.itemLast]}>
+      <Pressable style={[styles.viewHot, index===hot.length-1&& styles.itemLast]} onPress={pressProductDetails}>
         <View style={styles.viewImgHot}>
           <Image source={img}/>
         </View>
@@ -70,7 +74,7 @@ const Home = ({navigation}) => {
             {price}
           </Text>
         </View>
-      </View>
+      </Pressable>
     )
   }
   return (
@@ -336,7 +340,8 @@ const styles = StyleSheet.create({
   viewImgHead: {
     width: 75,
     height: 37,
-    backgroundColor: '#F3F3F3',
+    backgroundColor:'#F3F3F3',
+    elevation:1,
     borderRadius: 25,
     flexDirection: 'row',
   },
