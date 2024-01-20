@@ -22,6 +22,7 @@ function App(): React.JSX.Element {
 
   return (
     // trong
+    // trong2
     // <Login />
     // <SignUp />
     // <Welcome />
