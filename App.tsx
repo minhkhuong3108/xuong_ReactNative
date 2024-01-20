@@ -21,6 +21,7 @@ import ProductDetails from './src/ProductDetails';
 function App(): React.JSX.Element {
 
   return (
+    // trong
     // <Login />
     // <SignUp />
     // <Welcome />
