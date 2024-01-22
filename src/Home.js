@@ -1,12 +1,12 @@
 import { FlatList, Image, Pressable, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
 import React, { useState } from 'react'
 
-const Home = ({navigation}) => {
-  const pressHot=()=>{
+const Home = ({ navigation }) => {
+  const pressHot = () => {
     navigation.navigate('ProductHot')
   }
 
-  const pressProductDetails=()=>{
+  const pressProductDetails = () => {
     navigation.navigate('ProductDetails')
   }
   const [search, setSearch] = useState('')
@@ -15,7 +15,7 @@ const Home = ({navigation}) => {
   const renderItemCategory = ({ item, index }) => {
     const { id, name, img } = item
     return (
-      <View style={[styles.viewCategory, index ===category.length-1  && styles.itemLast]} >
+      <View style={[styles.viewCategory, index === category.length - 1 && styles.itemLast]} >
         <TouchableOpacity style={styles.btnCategory}>
           <Image source={img} />
         </TouchableOpacity>
@@ -27,23 +27,23 @@ const Home = ({navigation}) => {
 
   const [feature, setFeature] = useState(sanPhamTuongLai)
   const [favorited, setFavorited] = useState(0)
-  const renderItemFeature=({item, index}) =>{
-    const {id, name, price, ship, rate, sale, img} = item
-    return(
-      <View style={[styles.viewFeature, index ===feature.length-1 && styles.itemLast]}>
+  const renderItemFeature = ({ item, index }) => {
+    const { id, name, price, ship, rate, sale, img } = item
+    return (
+      <View style={[styles.viewFeature, index === feature.length - 1 && styles.itemLast]}>
         <View style={styles.viewSale}>
           <Text style={styles.txtSale}>{sale}</Text>
         </View>
 
-        <TouchableOpacity style={styles.btnFavorite} onPress={()=>{setFavorited(id)}}>
+        <TouchableOpacity style={styles.btnFavorite} onPress={() => { setFavorited(id) }}>
           {
-            id === favorited ? <Image style={styles.imgFavorite} source={require('../assets/images/home/product_feature/favorite.png')}/> 
-            : <Image style={styles.imgFavorite} source={require('../assets/images/home/product_feature/no_favorite.png')}/>
+            id === favorited ? <Image style={styles.imgFavorite} source={require('../assets/images/home/product_feature/favorite.png')} />
+              : <Image style={styles.imgFavorite} source={require('../assets/images/home/product_feature/no_favorite.png')} />
 
           }
         </TouchableOpacity>
 
-        <Image source={img} style={styles.imgFeature}/>
+        <Image source={img} style={styles.imgFeature} />
 
         <View style={styles.viewDesFeature}>
           <View style={styles.viewNameFeature}>
@@ -59,18 +59,18 @@ const Home = ({navigation}) => {
     )
   }
 
-  const [hot, setHot]= useState(sanPhamHot)
-  const renderItemHot =({item, index})=>{
-    const {id, name, price, img}= item
-    return(
-      <Pressable style={[styles.viewHot, index===hot.length-1&& styles.itemLast]} onPress={pressProductDetails}>
+  const [hot, setHot] = useState(sanPhamHot)
+  const renderItemHot = ({ item, index }) => {
+    const { id, name, price, img } = item
+    return (
+      <Pressable style={[styles.viewHot, index === hot.length - 1 && styles.itemLast]} onPress={pressProductDetails}>
         <View style={styles.viewImgHot}>
-          <Image source={img}/>
+          <Image source={img} />
         </View>
-        <View style={styles.viewSubHot}>       
+        <View style={styles.viewSubHot}>
           <Text style={styles.txtNameHot}>{name}</Text>
           <Text style={styles.txtPriceHot}>
-            <Text style={{color:'#FFC532'}}>$</Text>
+            <Text style={{ color: '#FFC532' }}>$</Text>
             {price}
           </Text>
         </View>
@@ -115,30 +115,30 @@ const Home = ({navigation}) => {
 
       <View>
         <FlatList
-        horizontal={true}
-        showsHorizontalScrollIndicator={false}
-        data={category}
-        renderItem={renderItemCategory}
-        key={item => item.id}
+          horizontal={true}
+          showsHorizontalScrollIndicator={false}
+          data={category}
+          renderItem={renderItemCategory}
+          key={item => item.id}
         />
       </View>
-      
+
 
       <View style={styles.viewMenu}>
         <Text style={styles.txtMenu}>Featured on Super Foodoo</Text>
 
         <TouchableOpacity style={styles.btnMenu}>
-          <Image source={require('../assets/images/home/right.png')}/>
+          <Image source={require('../assets/images/home/right.png')} />
         </TouchableOpacity>
       </View>
 
       <View>
         <FlatList
-        horizontal
-        showsHorizontalScrollIndicator={false}
-        data={feature}
-        renderItem={renderItemFeature}
-        key={item => item.key}
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          data={feature}
+          renderItem={renderItemFeature}
+          key={item => item.key}
         />
       </View>
 
@@ -146,7 +146,7 @@ const Home = ({navigation}) => {
         <Text style={styles.txtMenu}>Hot spots</Text>
 
         <TouchableOpacity style={styles.btnMenu} onPress={pressHot}>
-          <Image source={require('../assets/images/home/right.png')}/>
+          <Image source={require('../assets/images/home/right.png')} />
         </TouchableOpacity>
       </View>
 
@@ -168,145 +168,145 @@ const Home = ({navigation}) => {
 export default Home
 
 const styles = StyleSheet.create({
-  txtNameHot:{
-    fontSize:16,
-    fontWeight:'bold',
-    marginBottom:10,
-    color:'#000',
+  txtNameHot: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    marginBottom: 10,
+    color: '#000',
   },
-  txtPriceHot:{
-    marginBottom:13,
-    fontWeight:'bold',
-    color:'#000',
-    fontSize:17
-  },  
-  viewImgHot:{
-    width:156,
-    height:50,
-    zIndex:1,
-    alignItems:'center',
+  txtPriceHot: {
+    marginBottom: 13,
+    fontWeight: 'bold',
+    color: '#000',
+    fontSize: 17
   },
-  viewSubHot:{
-    width:159,
-    height:133,
-    elevation:3,
-    backgroundColor:'#fff',
-    justifyContent:'flex-end',
-    alignItems:'center',
-    borderRadius:10
+  viewImgHot: {
+    width: 156,
+    height: 50,
+    zIndex: 1,
+    alignItems: 'center',
   },
-  viewHot:{
-    flexDirection:'column',
-    marginRight:40,
-    height:208,
-  },  
-  imgFavorite:{
-    width:22,
-    height:22,
+  viewSubHot: {
+    width: 159,
+    height: 133,
+    elevation: 3,
+    backgroundColor: '#fff',
+    justifyContent: 'flex-end',
+    alignItems: 'center',
+    borderRadius: 10
+  },
+  viewHot: {
+    flexDirection: 'column',
+    marginRight: 40,
+    height: 208,
+  },
+  imgFavorite: {
+    width: 22,
+    height: 22,
 
   },
-  btnFavorite:{
-    position:'absolute',
-    zIndex:1,
-    right:10,
-    top:9
+  btnFavorite: {
+    position: 'absolute',
+    zIndex: 1,
+    right: 10,
+    top: 9
   },
-  txtSale:{
-    fontSize:12,
-    fontWeight:'bold',
-    color:'#000',
+  txtSale: {
+    fontSize: 12,
+    fontWeight: 'bold',
+    color: '#000',
   },
-  viewSale:{
-    position:'absolute',
-    height:19,
-    backgroundColor:'#FFDD22',
-    borderTopRightRadius:10,
-    borderBottomRightRadius:10,
-    zIndex:1,
-    top:15,
-    left:0,
-    paddingHorizontal:8
-  },  
-  txtRate:{
-    fontSize:12,
-    fontWeight:'bold',
-    color:'#000',
+  viewSale: {
+    position: 'absolute',
+    height: 19,
+    backgroundColor: '#FFDD22',
+    borderTopRightRadius: 10,
+    borderBottomRightRadius: 10,
+    zIndex: 1,
+    top: 15,
+    left: 0,
+    paddingHorizontal: 8
   },
-  viewRate:{
-    width:31,
-    height:28,
-    justifyContent:'center',
-    alignItems:'center',
-    backgroundColor:'#EAEAEA',
-    borderRadius:31/2
-  },  
-  txtPriceFeature:{
-    fontSize:12
-  },  
-  txtNameFeature:{
-    fontSize:17,
-    fontWeight:'bold',
-    color:'#000',
-  },  
-  viewNameFeature:{
-    flexDirection:'column'
+  txtRate: {
+    fontSize: 12,
+    fontWeight: 'bold',
+    color: '#000',
   },
-  viewDesFeature:{
-    flexDirection:'row',
-    justifyContent:'space-between',
-    alignItems:'center',
-    marginTop:10
+  viewRate: {
+    width: 31,
+    height: 28,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#EAEAEA',
+    borderRadius: 31 / 2
   },
-  imgFeature:{
-    width:255,
-    height:143,
-    borderRadius:10
+  txtPriceFeature: {
+    fontSize: 12
   },
-  viewFeature:{
-    flexDirection:'column',
-    marginRight:17,
-  },  
-  btnMenu:{
-    width:31, 
-    height:27,
-    backgroundColor:'#EAEAEA',
-    justifyContent:'center',
-    alignItems:'center',
-    borderRadius:31/2
+  txtNameFeature: {
+    fontSize: 17,
+    fontWeight: 'bold',
+    color: '#000',
   },
-  txtMenu:{
-    fontWeight:'bold',
-    fontSize:22,
-    color:'#000',
+  viewNameFeature: {
+    flexDirection: 'column'
   },
-  viewMenu:{
-    flexDirection:'row',
-    justifyContent:'space-between',
-    alignItems:'center',
-    marginTop:15,
-    marginBottom:17
+  viewDesFeature: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginTop: 10
   },
-  itemLast:{
-    marginRight:0
+  imgFeature: {
+    width: 255,
+    height: 143,
+    borderRadius: 10
   },
-  txtNameCatogory:{
-    color:'#000',
-    fontSize:16
+  viewFeature: {
+    flexDirection: 'column',
+    marginRight: 17,
   },
-  btnCategory:{
-    width:80,
-    height:65,
-    borderRadius:10,
-    justifyContent:'center', 
-    alignItems:'center',
-    backgroundColor:'#fff',
-    elevation:1,
-    marginBottom:5
+  btnMenu: {
+    width: 31,
+    height: 27,
+    backgroundColor: '#EAEAEA',
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 31 / 2
   },
-  viewCategory:{
-    flexDirection:'column',
-    alignItems:'center',
-    marginRight:30
+  txtMenu: {
+    fontWeight: 'bold',
+    fontSize: 22,
+    color: '#000',
+  },
+  viewMenu: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginTop: 15,
+    marginBottom: 17
+  },
+  itemLast: {
+    marginRight: 0
+  },
+  txtNameCatogory: {
+    color: '#000',
+    fontSize: 16
+  },
+  btnCategory: {
+    width: 80,
+    height: 65,
+    borderRadius: 10,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#fff',
+    elevation: 1,
+    marginBottom: 5
+  },
+  viewCategory: {
+    flexDirection: 'column',
+    alignItems: 'center',
+    marginRight: 30
   },
   viewSearch: {
     width: '100%',
@@ -340,20 +340,20 @@ const styles = StyleSheet.create({
   viewImgHead: {
     width: 75,
     height: 37,
-    backgroundColor:'#F3F3F3',
-    elevation:1,
+    backgroundColor: '#F3F3F3',
+    elevation: 1,
     borderRadius: 25,
     flexDirection: 'row',
   },
-  txtHead:{
-    color:'#000',
-    fontSize:16
+  txtHead: {
+    color: '#000',
+    fontSize: 16
   },
   txtHeadBold: {
     fontWeight: 'bold',
     fontSize: 16,
     marginRight: 5,
-    color:'#000',
+    color: '#000',
   },
   viewSubText: {
     flexDirection: 'row',
@@ -374,7 +374,7 @@ const styles = StyleSheet.create({
   }
 })
 
-var sanPhamHot=[
+var sanPhamHot = [
   {
     'id': 'hot1',
     'name': 'Mc Double',
@@ -397,7 +397,7 @@ var sanPhamHot=[
   }
 ]
 
-var sanPhamTuongLai=[
+var sanPhamTuongLai = [
   {
     'id': 'ft1',
     'name': 'McDonald’s(Best Offer)',
