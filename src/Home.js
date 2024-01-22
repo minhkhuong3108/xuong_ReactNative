@@ -1,4 +1,4 @@
-import { FlatList, Image, Pressable, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
+import { FlatList, Image, Pressable, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
 import React, { useState } from 'react'
 
 const Home = ({ navigation }) => {
@@ -9,6 +9,10 @@ const Home = ({ navigation }) => {
   const pressProductDetails = () => {
     navigation.navigate('ProductDetails')
   }
+  const pressProductFeature=()=>{
+    navigation.navigate('ProductFeatured')
+  }
+
   const [search, setSearch] = useState('')
 
   const [category, setCatogery] = useState(loai)
@@ -78,7 +82,7 @@ const Home = ({ navigation }) => {
     )
   }
   return (
-    <View style={styles.container}>
+    <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
       <View style={styles.viewHeader}>
         <View style={styles.viewTxtHead}>
           <Text style={styles.txtHead}>Deliver now</Text>
@@ -127,7 +131,7 @@ const Home = ({ navigation }) => {
       <View style={styles.viewMenu}>
         <Text style={styles.txtMenu}>Featured on Super Foodoo</Text>
 
-        <TouchableOpacity style={styles.btnMenu}>
+        <TouchableOpacity style={styles.btnMenu} onPress={pressProductFeature}>
           <Image source={require('../assets/images/home/right.png')} />
         </TouchableOpacity>
       </View>
@@ -161,7 +165,7 @@ const Home = ({ navigation }) => {
       </View>
 
 
-    </View>
+    </ScrollView>
   )
 }
 
@@ -199,6 +203,7 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     marginRight: 40,
     height: 208,
+    marginBottom:20
   },
   imgFavorite: {
     width: 22,
@@ -370,7 +375,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: 'column',
-    padding: 20
+    padding: 20,
   }
 })
 

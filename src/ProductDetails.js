@@ -6,7 +6,7 @@ const ProductDetails = ({navigation}) => {
         navigation.goBack()
     }
   return (
-    <ScrollView style={styles.container}> 
+    <ScrollView style={styles.container} showsVerticalScrollIndicator={false}> 
         <View style={styles.viewBackground}>
             <TouchableOpacity style={styles.btnBack} onPress={pressBack}>
             <Image style={styles.imgBack} source={require('../assets/images/back.png')}/>
