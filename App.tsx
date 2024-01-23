@@ -17,6 +17,7 @@ import Foodoo from './src/Foodoo';
 import ProductDetails from './src/ProductDetails';
 import ProductFavorite from './src/ProductFavorite';
 import ProductFeatured from './src/ProductFeatured';
+import { NavigationContainer } from '@react-navigation/native';
 
 
 
@@ -29,12 +30,14 @@ function App(): React.JSX.Element {
     // <SignUp />
     // <Welcome />
     // <Home />
-    // <AppStack/>
     // <ProductDetails/>
     // <Home />
     // <Foodoo/>
     // <ProductFavorite />
-    <ProductFeatured/>
+    // <ProductFeatured/>
+    <NavigationContainer>
+      <AppStack/>
+    </NavigationContainer>
   )
 }
 
