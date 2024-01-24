@@ -18,6 +18,10 @@ import ProductDetails from './src/ProductDetails';
 import ProductFavorite from './src/ProductFavorite';
 import ProductFeatured from './src/ProductFeatured';
 import { NavigationContainer } from '@react-navigation/native';
+import ResetPassword from './src/ResetPassword';
+import UpdatePassword from './src/UpdatePassword';
+import Profile from './src/Profile';
+import Addresses from './src/Addresses';
 
 
 
@@ -35,9 +39,13 @@ function App(): React.JSX.Element {
     // <Foodoo/>
     // <ProductFavorite />
     // <ProductFeatured/>
-    <NavigationContainer>
-      <AppStack/>
-    </NavigationContainer>
+    // <NavigationContainer>
+    //   <AppStack/>
+    // </NavigationContainer>
+    <SafeAreaView>
+      <StatusBar/>
+      <Addresses/>
+    </SafeAreaView>
   )
 }
 
