@@ -1,10 +1,6 @@
 import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import React from 'react'
-import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import Login from '../Login';
-import SignUp from '../SignUp';
-import Welcome from '../Welcome';
 import Home from '../Home';
 import Foodoo from '../Foodoo';
 import ProductDetails from '../ProductDetails';
@@ -24,12 +20,9 @@ const CustomTabBarButton=({children, onPress})=>(
   </TouchableOpacity>
 )
 
-const AppStack = () => {
+const MainStackNavigation = () => {
   return (
         <Stack.Navigator screenOptions={{headerShown:false}}>
-            <Stack.Screen name='Welcome' component={Welcome}/>
-            <Stack.Screen name='Login' component={Login}/>
-            <Stack.Screen name='Sign up' component={SignUp}/>
             <Stack.Screen name='Home' component={AppTab}/>
             <Stack.Screen name='ProductHot' component={Foodoo}/>
             <Stack.Screen name='ProductDetails' component={ProductDetails}/>
@@ -114,7 +107,7 @@ const AppTab=()=>{
   )
 }
 
-export default AppStack
+export default MainStackNavigation
 
 const styles = StyleSheet.create({
   viewCart:{
