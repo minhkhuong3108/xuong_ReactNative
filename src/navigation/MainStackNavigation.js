@@ -24,12 +24,9 @@ const CustomTabBarButton=({children, onPress})=>(
   </TouchableOpacity>
 )
 
-const AppStack = () => {
+const MainStackNavigation = () => {
   return (
         <Stack.Navigator screenOptions={{headerShown:false}}>
-            <Stack.Screen name='Welcome' component={Welcome}/>
-            <Stack.Screen name='Login' component={Login}/>
-            <Stack.Screen name='Sign up' component={SignUp}/>
             <Stack.Screen name='Home' component={AppTab}/>
             <Stack.Screen name='ProductHot' component={Foodoo}/>
             <Stack.Screen name='ProductDetails' component={ProductDetails}/>
@@ -114,7 +111,7 @@ const AppTab=()=>{
   )
 }
 
-export default AppStack
+export default MainStackNavigation
 
 const styles = StyleSheet.create({
   viewCart:{

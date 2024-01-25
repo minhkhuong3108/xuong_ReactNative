@@ -1,10 +1,12 @@
 import { StyleSheet, Text, View, Image, TextInput, Pressable, TouchableOpacity } from 'react-native'
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { NavigationContainer } from '@react-navigation/native';
 // khai báo stack
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { AppContext } from './AppContext';
 
 const Login = ({navigation}) => {
+    const [isLogin, setIsLogin] = useContext(AppContext)
     const handlePress = ()=>{
         navigation.navigate('Sign up')
     }
