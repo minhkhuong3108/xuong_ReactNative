@@ -18,6 +18,7 @@ import ProductDetails from './src/ProductDetails';
 import ProductFavorite from './src/ProductFavorite';
 import ProductFeatured from './src/ProductFeatured';
 import { NavigationContainer } from '@react-navigation/native';
+import Setting from './src/Setting';
 
 
 
@@ -36,6 +37,7 @@ function App(): React.JSX.Element {
     <NavigationContainer>
       <AppStack/>
     </NavigationContainer>
+    // <Setting/>
   )
 }
 
