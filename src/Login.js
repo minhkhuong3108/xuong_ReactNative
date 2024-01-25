@@ -6,7 +6,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { AppContext } from './AppContext';
 
 const Login = ({navigation}) => {
-    const [isLogin, setIsLogin] = useContext(AppContext)
+    const {isLogin, setIsLogin} = useContext(AppContext)
     const handlePress = ()=>{
         navigation.navigate('Sign up')
     }
@@ -40,9 +40,9 @@ const Login = ({navigation}) => {
             <Text style={{color:'#000', fontWeight: '500'}}>Forgot the password ?</Text>
         </View>
 
-        <Pressable style={styles.btnLogin} onPress={pressHome}>
+        <TouchableOpacity style={styles.btnLogin} onPress={()=>{setIsLogin(true)}}>
             <Text style={styles.textLogin}>Login</Text>
-        </Pressable>
+        </TouchableOpacity>
 
         <View style={styles.viewOr}>
             <Text style={styles.textOr}>or continue with</Text>
