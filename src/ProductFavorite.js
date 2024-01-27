@@ -59,10 +59,6 @@ function ProductFavorite(props) {
         <View style={styles.container}>
 
             <View style={styles.Class1}>
-                <Image
-                    style={styles.icon}
-                    source={icons.muiTen}
-                />
                 <Text style={styles.title}> Favorites</Text>
             </View>
 
@@ -71,6 +67,7 @@ function ProductFavorite(props) {
                 <FlatList
                     data={products}
                     numColumns={1} //phân thành 2 cột
+                    showsVerticalScrollIndicator={false}
                     renderItem={({ item }) =>
                         <FavoriteItem
                             products={item}
@@ -104,7 +101,7 @@ const styles = StyleSheet.create({
 
 
     Class1: {
-        marginTop: 20,
+        paddingVertical: 20,
 
         height: 'auto',
         width: '100%'

@@ -5,8 +5,10 @@ import {
 import React, { useState, useEffect } from 'react';
 import { images, icons, } from '../constants';
 import ProductFeaturedItem from './ProductFeaturedItem';
-function ProductFeatured(props) {
-
+function ProductFeatured({navigation}) {
+    const pressBack=()=>{
+        navigation.goBack();
+    }
     const [products, setProducts] = useState([
         {
             id: 1,
@@ -59,12 +61,12 @@ function ProductFeatured(props) {
     return (
         <View style={styles.container}>
 
-            <View style={styles.Class1}>
+            <TouchableOpacity style={styles.Class1} onPress={pressBack}>
                 <Image
                     style={styles.icon}
                     source={icons.muiTen}
                 />
-            </View>
+            </TouchableOpacity>
 
             <View style={styles.Class2}>
                 <Text style={styles.title}> Featured on Super Foodoo</Text>
@@ -74,6 +76,7 @@ function ProductFeatured(props) {
                 <FlatList
                     data={products}
                     numColumns={1} //phân thành 2 cột
+                    showsVerticalScrollIndicator={false}
                     renderItem={({ item }) =>
                         <ProductFeaturedItem
                             products={item}

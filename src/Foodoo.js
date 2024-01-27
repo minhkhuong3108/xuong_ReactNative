@@ -98,6 +98,7 @@ function Foodoo({navigation}) {
                     <FlatList
                         data={filteredFoods()}
                         numColumns={2} //phân thành 2 cột
+                        showsVerticalScrollIndicator={false}
                         renderItem={({ item }) =>
                             <FoodooItem
                                 onPress={pressProductDetails}

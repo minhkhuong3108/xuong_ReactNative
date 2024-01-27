@@ -12,27 +12,24 @@ import SignUp from './src/SignUp';
 import Welcome from './src/Welcome';
 import Home from './src/Home';
 // import { NavigationContainer } from '@react-navigation/native';
-import AppStack from './src/navigation/AppStack';
 import Foodoo from './src/Foodoo';
 import ProductDetails from './src/ProductDetails';
 import ProductFavorite from './src/ProductFavorite';
 import ProductFeatured from './src/ProductFeatured';
+import { NavigationContainer } from '@react-navigation/native';
+import Setting from './src/Setting';
+import MainStackNavigation from './src/navigation/MainStackNavigation';
+import AppNavigation from './src/navigation/AppNavigation';
+import { AppProvide } from './src/AppContext';
 
 
 
 function App(): React.JSX.Element {
 
   return (
-    // <Login />
-    // <SignUp />
-    // <Welcome />
-    // <Home />
-    // <AppStack/>
-    // <ProductDetails/>
-    // <Home />
-    // <Foodoo/>
-    // <ProductFavorite />
-    <ProductFeatured/>
+    <AppProvide>
+      <AppNavigation/>
+    </AppProvide>
   )
 }
 
