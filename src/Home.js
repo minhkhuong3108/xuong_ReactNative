@@ -55,6 +55,7 @@ const Home = ({ navigation }) => {
             <Text style={styles.txtRate}>{rate}</Text>
           </View>
         </View>
+
       </View>
     )
   }
