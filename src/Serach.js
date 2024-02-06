@@ -8,7 +8,7 @@ import { Alert } from 'react-native';
 import FoodooItem from './FoodooItem';
 
 
-function Foodoo({navigation}) {
+function Search({navigation}) {
 
     const backHome=()=>{
         navigation.goBack()
@@ -51,17 +51,10 @@ function Foodoo({navigation}) {
     return (
         <View style={styles.container}>
             <View style={styles.Class1}>
-                <Text style={styles.title}> Hot spots</Text>
-                <TouchableOpacity onPress={backHome}
-                    style={styles.icon}>
-                <Image 
-                    source={icons.muiTen}
-                />
-                </TouchableOpacity>
-                
+                <Text style={styles.title}>Search</Text>               
             </View>
 
-            {/* <View style={styles.Class2}
+            <View style={styles.Class2}
             >
                 <Image
                     style={styles.iconSearch}
@@ -90,13 +83,13 @@ function Foodoo({navigation}) {
                 <Image
                     style={styles.iconMenu}
                     source={icons.menu} />
-            </View> */}
+            </View>
 
             <View style={styles.Class3}>
 
                 {filteredFoods().length > 0 ?
                     <FlatList
-                        data={filteredFoods()}
+                        data={foods}
                         numColumns={2} //phân thành 2 cột
                         showsVerticalScrollIndicator={false}
                         renderItem={({ item }) =>
@@ -104,8 +97,8 @@ function Foodoo({navigation}) {
                                 onPress={pressProductDetails}
                                 foods={item}
                                 key={item.name} />}
-                        keyExtractor={eachFood => eachFood.name}
-                        columnWrapperStyle={{ justifyContent: 'flex-end' }}
+                        // keyExtractor={eachFood => eachFood.name}
+                        // columnWrapperStyle={{ justifyContent: 'flex-end' }}
                     /> : <View style={styles.Alerts}>
                         <Text style={styles.AleartsDoc}>No food found</Text>
                     </View>
@@ -116,7 +109,7 @@ function Foodoo({navigation}) {
         </View>
     );
 }
-export default Foodoo
+export default Search
 
 const styles = StyleSheet.create({
     AleartsDoc: {
@@ -190,7 +183,7 @@ const styles = StyleSheet.create({
     },
     Class1: {
         flexDirection: 'row',
-        marginTop: 40,
+        marginTop: 30,
         justifyContent: 'center'
 
     }
