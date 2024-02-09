@@ -11,6 +11,7 @@ import Setting from '../Setting';
 import Cart from '../Cart';
 import Search from '../Serach';
 
+
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 

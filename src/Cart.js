@@ -1,53 +1,92 @@
-import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
-import React from 'react'
+import { Alert, FlatList, Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import React, { useContext } from 'react'
+import { AppContext } from './AppContext'
 
 const Cart = () => {
+    const { cart, setCart } = useContext(AppContext)
+    const totalPrice = cart.reduce((total, item) => {
+        return total + item.price * item.quantity
+    }, 0)
+    const renderItem = ({ item }) => {
+        const { id, name, price, image, quantity } = item
+        const priceItem = price * quantity
+        const onChangeQuantity = (type) => {
+            const quantity = item.quantity + type
+            const index = cart.findIndex(cartItem => cartItem.id == id)
+            if (quantity <= 0) {
+                Alert.alert(
+                    'Thông báo',
+                    'Bạn có muốn xoá sản phẩm này khỏi giỏ hàng?',
+                    [
+                        {
+                            text: 'Cancel',
+                        },
+                        {
+                            text: 'OK',
+                            onPress: () => {
+                                cart.splice(index, 1)
+                                setCart([...cart])
+                            }
+                        }
+                    ],
+                    { cancelable: false }
+                )
+            } else {
+                cart[index].quantity = quantity
+                setCart([...cart])
+            }
+        }
+        return (
+            <View style={styles.viewContainer}>
+                <View style={styles.viewNoMarginRow}>
+                    <Text style={styles.txtName}>{name}</Text>
+                    <Image style={styles.imgProduct} source={{ uri: image }} />
+                </View>
+
+                <View style={styles.viewRow}>
+                    <View style={styles.viewQuantity}>
+                        <TouchableOpacity onPress={() => onChangeQuantity(-1)}>
+                            <Image source={require('../assets/images/cart/reduce.png')} />
+                        </TouchableOpacity>
+                        <View style={styles.viewTxtQuantity}>
+                            <Text style={styles.txtQuantity}>{quantity}</Text>
+                        </View>
+                        <TouchableOpacity onPress={() => onChangeQuantity(1)}>
+                            <Image source={require('../assets/images/cart/increase.png')} />
+                        </TouchableOpacity>
+                    </View>
+
+                    <Text style={styles.txtPriceItem}>${priceItem.toFixed(2)}</Text>
+                </View>
+            </View>
+        )
+    }
     return (
         <View style={styles.container}>
-            <View>
-                {/* phần header */}
-                <Text style={styles.txtHeader}>Cart</Text>
+            {/* phần header */}
+            <Text style={styles.txtHeader}>Cart</Text>
 
-                {/* Phần body */}
-                <View style={styles.viewContainer}>
-                    <View style={styles.viewNoMarginRow}>
-                        <Text style={styles.txtName}>Mc Double</Text>
-                        <Image style={styles.imgProduct} source={require('../assets/images/product/product1.png')} />
-                    </View>
-
-                    <View style={styles.viewRow}>
-                        <View style={styles.viewQuantity}>
-                            <TouchableOpacity>
-                                <Image source={require('../assets/images/cart/reduce.png')} />
-                            </TouchableOpacity>
-                            <View style={styles.viewTxtQuantity}>
-                                <Text style={styles.txtQuantity}>1</Text>
-                            </View>
-                            <TouchableOpacity >
-                                <Image source={require('../assets/images/cart/increase.png')} />
-                            </TouchableOpacity>
-                        </View>
-
-                        <Text style={styles.txtPriceItem}>$20.99</Text>
-                    </View>
-                </View>
+            {/* Phần body */}
+            <FlatList
+                showsVerticalScrollIndicator={false}
+                data={cart}
+                renderItem={renderItem}
+                keyExtractor={item => item.id}
+            />
 
 
-                <View style={styles.viewTotalPrice}>
-                    <Text style={styles.txtTotalPrice}>Subtotal</Text>
-                    <Text style={styles.txtTotalPrice}>$20.99</Text>
-                </View>
+            <View style={styles.viewTotalPrice}>
+                <Text style={styles.txtTotalPrice}>Subtotal</Text>
+                <Text style={styles.txtTotalPrice}>${totalPrice.toFixed(2)}</Text>
             </View>
 
 
-            <View>
-                <TouchableOpacity style={styles.btnCheckout}>
-                    <Text style={styles.txtCheackout}>Go to checkout</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.btnCheckout}>
-                    <Text style={styles.txtCheackout}>Add items</Text>
-                </TouchableOpacity>
-            </View>
+            <TouchableOpacity style={styles.btnCheckout}>
+                <Text style={styles.txtCheackout}>Go to checkout</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.btnCheckout}>
+                <Text style={styles.txtCheackout}>Add items</Text>
+            </TouchableOpacity>
         </View>
     )
 }
@@ -65,7 +104,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         height: 55,
-        marginBottom: 20,
+        marginTop: 20,
         borderRadius: 100
     },
     txtTotalPrice: {
@@ -76,7 +115,8 @@ const styles = StyleSheet.create({
     viewTotalPrice: {
         flexDirection: 'row',
         justifyContent: 'space-between',
-        marginTop: 40
+        marginTop: 40,
+        marginBottom: 20
     },
     txtPriceItem: {
         fontSize: 18,
@@ -88,11 +128,11 @@ const styles = StyleSheet.create({
         fontWeight: 'bold'
     },
     viewTxtQuantity: {
-        width: 24,
-        height: 24,
+        width: 30,
+        height: 30,
         alignItems: 'center',
         justifyContent: 'center',
-        borderRadius: 12,
+        borderRadius: 15,
         marginHorizontal: 16,
         backgroundColor: '#fff'
     },
@@ -149,6 +189,5 @@ const styles = StyleSheet.create({
         paddingHorizontal: 24,
         paddingVertical: 30,
         backgroundColor: '#fff',
-        justifyContent: 'space-between'
     }
 })

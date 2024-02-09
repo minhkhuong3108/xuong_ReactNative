@@ -1,5 +1,6 @@
-import { FlatList, Image, Pressable, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
-import React, { useState } from 'react'
+import { FlatList, Image, ImageBackground, Pressable, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
+import React, { useEffect, useState } from 'react'
+import AxiosInstance from './helpers/AxiosInstance'
 
 const Home = ({ navigation }) => {
   const pressHot = () => {
@@ -9,7 +10,7 @@ const Home = ({ navigation }) => {
   const pressProductDetails = () => {
     navigation.navigate('ProductDetails')
   }
-  const pressProductFeature=()=>{
+  const pressProductFeature = () => {
     navigation.navigate('ProductFeatured')
   }
 
@@ -63,13 +64,24 @@ const Home = ({ navigation }) => {
     )
   }
 
-  const [hot, setHot] = useState(sanPhamHot)
+  const [hot, setHot] = useState([])
+  useEffect(() => {
+    const getProduct = async () => {
+      try {
+        const response = await AxiosInstance().get('/hotSpot')
+        setHot(response)
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    getProduct()
+  }, [])
   const renderItemHot = ({ item, index }) => {
-    const { id, name, price, img } = item
+    const { id, name, price, image } = item
     return (
-      <Pressable style={[styles.viewHot, index === hot.length - 1 && styles.itemLast]} onPress={pressProductDetails}>
+      <TouchableOpacity style={[styles.viewHot, index === 2 && styles.itemLast]} onPress={() => { navigation.navigate('ProductDetails', id) }}>
         <View style={styles.viewImgHot}>
-          <Image source={img} />
+          <ImageBackground style={{ width: 143, height: 108 }} source={{ uri: image }} />
         </View>
         <View style={styles.viewSubHot}>
           <Text style={styles.txtNameHot}>{name}</Text>
@@ -78,7 +90,7 @@ const Home = ({ navigation }) => {
             {price}
           </Text>
         </View>
-      </Pressable>
+      </TouchableOpacity>
     )
   }
   return (
@@ -158,9 +170,9 @@ const Home = ({ navigation }) => {
         <FlatList
           horizontal
           showsHorizontalScrollIndicator={false}
-          data={hot}
+          data={hot.slice(0, 3)}
           renderItem={renderItemHot}
-          key={item => item.id}
+          keyExtractor={item => item.id}
         />
       </View>
 
@@ -187,7 +199,7 @@ const styles = StyleSheet.create({
   viewImgHot: {
     width: 156,
     height: 50,
-    zIndex: 1,
+    zIndex: 2,
     alignItems: 'center',
   },
   viewSubHot: {
@@ -197,13 +209,14 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     justifyContent: 'flex-end',
     alignItems: 'center',
-    borderRadius: 10
+    borderRadius: 10,
+
   },
   viewHot: {
     flexDirection: 'column',
     marginRight: 40,
     height: 208,
-    marginBottom:20
+    marginBottom: 20,
   },
   imgFavorite: {
     width: 22,

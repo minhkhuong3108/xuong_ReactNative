@@ -6,17 +6,47 @@ import React, { useState, useEffect } from 'react';
 import { icons, } from '../constants';
 import { Alert } from 'react-native';
 import FoodooItem from './FoodooItem';
+import AxiosInstance from './helpers/AxiosInstance';
 
 
-function Foodoo({navigation}) {
+function Foodoo({ navigation }) {
+    const [hot, setHot] = useState([])
+    useEffect(() => {
+      const getProduct = async () => {
+        try {
+          const response = await AxiosInstance().get('/hotSpot')
+          setHot(response)
+        } catch (error) {
+          console.log(error);
+        }
+      }
+      getProduct()
+    },[])
 
-    const backHome=()=>{
+    const renderItem= ({item})=>{
+        const {id,name,price, image} = item
+        return(
+            <TouchableOpacity
+            onPress={()=>{navigation.navigate('ProductDetails',id)}}
+            style={styles.container}>
+            <View style={styles.Class3Item}>
+                <View style={styles.itemItem}>
+                    <Image source={{uri:image}}
+                        style={styles.imageItem} />
+                    <View style={styles.ClassChild}>
+                        <Text style={styles.nameItem}>{name}</Text>
+                        <Text style={styles.priceItem}> <Text style={styles.dollar}>$</Text> {price}</Text>
+                    </View>
+                </View>
+            </View>
+        </TouchableOpacity>
+        )
+    }
+    const backHome = () => {
         navigation.goBack()
     }
 
-    const pressProductDetails=()=>{
-        navigation.navigate('ProductDetails')
-    }
+    
     const [foods, setFoods] = useState([
         { id: 1, img: require('../assets/images/product/product1.png'), name: "Extra Meat Burger", price: 9.99 },
         { id: 2, img: require('../assets/images/product/product2.png'), name: "Supreme Pizza", price: 4.45 },
@@ -45,22 +75,23 @@ function Foodoo({navigation}) {
 
     // Hàm lọc dựa vào tên nhập vào TextInput để tìm sản phẩm , không phân biệt hoa thường
     const filteredFoods = () =>
-        foods.filter(eachFood => eachFood.name.toLowerCase().
+        hot.filter(eachFood => eachFood.name.toLowerCase().
             includes(searchText.toLowerCase()))
+    
 
     return (
         <View style={styles.container}>
             <View style={styles.Class1}>
-                <Text style={styles.title}> Hot spots</Text>
+                <Text style={styles.title}>Hot spots</Text>
                 <TouchableOpacity onPress={backHome}
                     style={styles.icon}>
-                <Image 
-                    source={icons.muiTen}
-                />
+                    <Image
+                        source={icons.muiTen}
+                    />
                 </TouchableOpacity>
-                
-            </View>
 
+            </View>
+            
             {/* <View style={styles.Class2}
             >
                 <Image
@@ -94,22 +125,12 @@ function Foodoo({navigation}) {
 
             <View style={styles.Class3}>
 
-                {filteredFoods().length > 0 ?
-                    <FlatList
-                        data={filteredFoods()}
-                        numColumns={2} //phân thành 2 cột
-                        showsVerticalScrollIndicator={false}
-                        renderItem={({ item }) =>
-                            <FoodooItem
-                                onPress={pressProductDetails}
-                                foods={item}
-                                key={item.name} />}
-                        keyExtractor={eachFood => eachFood.name}
-                        columnWrapperStyle={{ justifyContent: 'flex-end' }}
-                    /> : <View style={styles.Alerts}>
-                        <Text style={styles.AleartsDoc}>No food found</Text>
-                    </View>
-                }
+                <FlatList
+                showsVerticalScrollIndicator={false}
+                numColumns={2}
+                data={hot}
+                renderItem={renderItem}
+                keyExtractor={item => item.id}/>
 
             </View>
 
@@ -119,6 +140,48 @@ function Foodoo({navigation}) {
 export default Foodoo
 
 const styles = StyleSheet.create({
+    dollar: { color: '#FFC532' },
+    ClassChild: {
+        alignItems: 'center', 
+        marginTop: 70
+    },
+    imageItem: {
+        width: 170,
+        height:113,
+        position: 'absolute',
+        bottom: 70,
+        resizeMode: 'contain',
+
+    },
+    priceItem: {
+        fontWeight: 'bold',
+        lineHeight: 35,
+        fontSize: 15,
+    },
+    nameItem: {
+        fontWeight: 'bold',
+        lineHeight: 15,
+        fontSize: 15,
+    },
+    itemItem: {
+        height: 133,
+        width: 159,
+        backgroundColor: 'white',
+        borderRadius: 8,
+        shadowColor: 'black',
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.2,
+        shadowRadius: 4,
+        elevation: 8,
+        marginBottom: 20,
+        alignItems:'center'
+    },
+    Class3Item: {
+        flexDirection: 'row',
+        marginTop: 80,
+        flex: 1,
+        alignItems:'center'
+    },
     AleartsDoc: {
         color: 'black',
         fontSize: 15
@@ -174,7 +237,7 @@ const styles = StyleSheet.create({
         height: 54,
         borderRadius: 100,
         backgroundColor: '#E5E5E575',
-        alignItems:'center'
+        alignItems: 'center'
     },
     icon: {
         right: 230

@@ -7,8 +7,8 @@ import React, { useState, useEffect, } from 'react';
 import { images, icons, } from '../constants';
 import { UIButton } from '../components';
 import { Alert } from 'react-native';
-const FoodooItem = (props) => {
-    let { name, price, img } = props.foods
+const FoodooItem = (props,{navigation}) => {
+    let { id,name, price, image } = props.foods
     const { onPress } = props
     return (
         <Pressable
@@ -16,7 +16,7 @@ const FoodooItem = (props) => {
             style={styles.container}>
             <View style={styles.Class3}>
                 <View style={styles.item}>
-                    <Image source={img}
+                    <Image source={{uri:image}}
                         style={styles.imageItem} />
                     <View style={styles.ClassChild}>
                         <Text style={styles.nameItem}>{name}</Text>
@@ -68,8 +68,8 @@ const styles = StyleSheet.create({
     Class3: {
         flexDirection: 'row',
         marginTop: 80,
-        flex: 1
-
+        flex: 1,
+        alignItems:'center'
     },
     titleInput: {
         marginLeft: 60
