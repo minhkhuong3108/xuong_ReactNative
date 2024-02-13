@@ -9,7 +9,7 @@ import FoodooItem from './FoodooItem';
 import AxiosInstance from './helpers/AxiosInstance';
 
 
-function Foodoo({ navigation }) {
+function Search({ navigation }) {
     const [hot, setHot] = useState([])
     useEffect(() => {
       const getProduct = async () => {
@@ -22,7 +22,9 @@ function Foodoo({ navigation }) {
       }
       getProduct()
     },[])
-
+    const backHome = () => {
+        navigation.goBack()
+    }
     const renderItem= ({item})=>{
         const {id,name,price, image} = item
         return(
@@ -42,11 +44,6 @@ function Foodoo({ navigation }) {
         </TouchableOpacity>
         )
     }
-    const backHome = () => {
-        navigation.goBack()
-    }
-
-    
     const [foods, setFoods] = useState([
         { id: 1, img: require('../assets/images/product/product1.png'), name: "Extra Meat Burger", price: 9.99 },
         { id: 2, img: require('../assets/images/product/product2.png'), name: "Supreme Pizza", price: 4.45 },
@@ -77,22 +74,14 @@ function Foodoo({ navigation }) {
     const filteredFoods = () =>
         hot.filter(eachFood => eachFood.name.toLowerCase().
             includes(searchText.toLowerCase()))
-    
 
     return (
         <View style={styles.container}>
             <View style={styles.Class1}>
-                <Text style={styles.title}>Hot spots</Text>
-                <TouchableOpacity onPress={backHome}
-                    style={styles.icon}>
-                    <Image
-                        source={icons.muiTen}
-                    />
-                </TouchableOpacity>
-
+                <Text style={styles.title}>Search</Text>
             </View>
-            
-            {/* <View style={styles.Class2}
+
+            <View style={styles.Class2}
             >
                 <Image
                     style={styles.iconSearch}
@@ -121,23 +110,29 @@ function Foodoo({ navigation }) {
                 <Image
                     style={styles.iconMenu}
                     source={icons.menu} />
-            </View> */}
+            </View>
 
             <View style={styles.Class3}>
-
-                <FlatList
-                showsVerticalScrollIndicator={false}
-                numColumns={2}
-                data={hot}
-                renderItem={renderItem}
-                keyExtractor={item => item.id}/>
+                
+                {filteredFoods().length > 0 ?
+                    <FlatList
+                        data={filteredFoods()}
+                        numColumns={2} //phân thành 2 cột
+                        showsVerticalScrollIndicator={false}
+                        renderItem={renderItem}
+                    keyExtractor={eachFood => eachFood.name}
+                    columnWrapperStyle={{ justifyContent: 'flex-end' }}
+                    /> : <View style={styles.Alerts}>
+                        <Text style={styles.AleartsDoc}>No food found</Text>
+                    </View>
+                }
 
             </View>
 
         </View>
     );
 }
-export default Foodoo
+export default Search
 
 const styles = StyleSheet.create({
     dollar: { color: '#FFC532' },
@@ -253,7 +248,7 @@ const styles = StyleSheet.create({
     },
     Class1: {
         flexDirection: 'row',
-        marginTop: 40,
+        marginTop: 30,
         justifyContent: 'center'
 
     }

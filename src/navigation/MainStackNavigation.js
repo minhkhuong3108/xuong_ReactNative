@@ -8,6 +8,9 @@ import ProductFavorite from '../ProductFavorite';
 import ProductFeatured from '../ProductFeatured';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Setting from '../Setting';
+import Cart from '../Cart';
+import Search from '../Serach';
+
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -48,7 +51,7 @@ const AppTab=()=>{
         )
       }}
       />
-      <Tab.Screen name='TabSearch' component={Foodoo}
+      <Tab.Screen name='TabSearch' component={Search}
       options={{
         tabBarIcon:({focused})=>(
           <View style={styles.viewNavItem}>
@@ -62,7 +65,7 @@ const AppTab=()=>{
         )
       }}
       />
-      <Tab.Screen name='TabCart' component={ProductDetails}
+      <Tab.Screen name='TabCart' component={Cart}
       options={{
         tabBarIcon:({focused})=>(
           <Image 
