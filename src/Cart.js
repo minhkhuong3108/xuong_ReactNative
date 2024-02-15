@@ -2,7 +2,8 @@ import { Alert, FlatList, Image, StyleSheet, Text, TouchableOpacity, View } from
 import React, { useContext } from 'react'
 import { AppContext } from './AppContext'
 
-const Cart = () => {
+const Cart = ({ navigation }) => {
+
     const { cart, setCart } = useContext(AppContext)
     const totalPrice = cart.reduce((total, item) => {
         return total + item.price * item.quantity
@@ -61,6 +62,7 @@ const Cart = () => {
             </View>
         )
     }
+    
     return (
         <View style={styles.container}>
             {/* phần header */}
@@ -81,7 +83,9 @@ const Cart = () => {
             </View>
 
 
-            <TouchableOpacity style={styles.btnCheckout}>
+            <TouchableOpacity
+                onPress={() => navigation.navigate('Orders')}
+                style={styles.btnCheckout}>
                 <Text style={styles.txtCheackout}>Go to checkout</Text>
             </TouchableOpacity>
             <TouchableOpacity style={styles.btnCheckout}>

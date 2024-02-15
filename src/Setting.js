@@ -40,6 +40,11 @@ const Setting = () => {
           </View> 
         </View>
 
+
+
+
+
+
         <View style={styles.viewFeatureItem}>
           <View  style={styles.imgFeatureItem}>
             <Image source={require('../assets/images/Setting/order.png')}/>
@@ -49,6 +54,11 @@ const Setting = () => {
             <Image source={require('../assets/images/Setting/arrow_right.png')}/>
           </View> 
         </View>
+
+
+
+        
+
 
         <View style={styles.viewFeatureItem}>
           <View  style={styles.imgFeatureItem}>
@@ -70,6 +80,8 @@ const Setting = () => {
           </View> 
         </View>
       </View>
+
+    
       <View style={styles.viewFeatureNoImg}>
         <View style={styles.viewTxtFeatureNoImg}>
           <Text style={styles.txtFeatureNoImg}>Settings</Text>

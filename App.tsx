@@ -28,7 +28,7 @@ function App(): React.JSX.Element {
 
   return (
     <AppProvide>
-      <AppNavigation/>
+      <AppNavigation />
     </AppProvide>
   )
 }
