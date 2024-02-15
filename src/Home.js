@@ -17,6 +17,8 @@ const Home = ({ navigation }) => {
   const [search, setSearch] = useState('')
 
   const [category, setCatogery] = useState(loai)
+
+
   const renderItemCategory = ({ item, index }) => {
     const { id, name, img } = item
     return (
@@ -60,6 +62,7 @@ const Home = ({ navigation }) => {
             <Text style={styles.txtRate}>{rate}</Text>
           </View>
         </View>
+
       </View>
     )
   }
@@ -217,6 +220,7 @@ const styles = StyleSheet.create({
     marginRight: 40,
     height: 208,
     marginBottom: 20,
+    marginBottom: 20
   },
   imgFavorite: {
     width: 22,
