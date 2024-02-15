@@ -57,12 +57,12 @@ const Orders = ({ navigation }) => {
       <View style={styles.viewContainer}>
         <View style={styles.viewNoMarginRow}>
           <View>
-            <Text style={styles.txtName}>Code:01</Text>
-            <Text style={styles.txtName}>name: Buger king</Text>
-            <Text style={styles.txtQuantity}>quantity: 1</Text>
+            <Text style={styles.txtName}>Id:01</Text>
+            <Text style={styles.txtName}>Name: Buger king</Text>
+            <Text style={styles.txtQuantity}>Quantity: 1</Text>
             <Text style={styles.txtPriceItem}>
               {/* ${priceItem.toFixed(2)} */}
-              price : 80$
+              Price : 80$
             </Text>
           </View>
           <View>

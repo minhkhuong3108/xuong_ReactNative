@@ -41,11 +41,11 @@ const OrdersDatail = ({ navigation }) => {
             <View style={styles.viewContainer}>
                 <View style={styles.viewNoMarginRow}>
                     <View>
-                        <Text style={styles.txtName}>name: Buger king</Text>
-                        <Text style={styles.txtQuantity}>quantity: 1</Text>
+                        <Text style={styles.txtName}>Name: Buger king</Text>
+                        <Text style={styles.txtQuantity}>Quantity: 1</Text>
                         <Text style={styles.txtPriceItem}>
                             {/* ${priceItem.toFixed(2)} */}
-                            price : 80$
+                            Price : 80$
                         </Text>
                     </View>
                     <View>
@@ -97,37 +97,37 @@ const OrdersDatail = ({ navigation }) => {
                 keyExtractor={item => item.id}
             />
             <ScrollView>
-                    <View style={styles.viewContainer}>
-                        <View style={styles.viewNoMarginRow}>
-                            <View>
-                                <Text style={styles.txtName}>name: Buger king</Text>
-                                <Text style={styles.txtQuantity}>quantity: 1</Text>
-                                <Text style={styles.txtPriceItem}>
-                                    {/* ${priceItem.toFixed(2)} */}
-                                    price : 80$
-                                </Text>
-                            </View>
-                            <View>
-                                <Image style={styles.imgProduct} source={require('../assets/images/home/product_hot/product1.png')} />
-                            </View>
+                <View style={styles.viewContainer}>
+                    <View style={styles.viewNoMarginRow}>
+                        <View>
+                            <Text style={styles.txtName}>Name: Buger king</Text>
+                            <Text style={styles.txtQuantity}>Quantity: 1</Text>
+                            <Text style={styles.txtPriceItem}>
+                                {/* ${priceItem.toFixed(2)} */}
+                                Price : 80$
+                            </Text>
+                        </View>
+                        <View>
+                            <Image style={styles.imgProduct} source={require('../assets/images/home/product_hot/product1.png')} />
                         </View>
                     </View>
+                </View>
 
-                    <View style={styles.viewContainer}>
-                        <View style={styles.viewNoMarginRow}>
-                            <View>
-                                <Text style={styles.txtName}>name: Buger king</Text>
-                                <Text style={styles.txtQuantity}>quantity: 1</Text>
-                                <Text style={styles.txtPriceItem}>
-                                    {/* ${priceItem.toFixed(2)} */}
-                                    price : 80$
-                                </Text>
-                            </View>
-                            <View>
-                                <Image style={styles.imgProduct} source={require('../assets/images/home/product_hot/product1.png')} />
-                            </View>
+                <View style={styles.viewContainer}>
+                    <View style={styles.viewNoMarginRow}>
+                        <View>
+                            <Text style={styles.txtName}>name: Buger king</Text>
+                            <Text style={styles.txtQuantity}>quantity: 1</Text>
+                            <Text style={styles.txtPriceItem}>
+                                {/* ${priceItem.toFixed(2)} */}
+                                price : 80$
+                            </Text>
                         </View>
-                    </View><View style={styles.viewContainer}>
+                        <View>
+                            <Image style={styles.imgProduct} source={require('../assets/images/home/product_hot/product1.png')} />
+                        </View>
+                    </View>
+                </View><View style={styles.viewContainer}>
                     <View style={styles.viewNoMarginRow}>
                         <View>
                             <Text style={styles.txtName}>name: Buger king</Text>
@@ -142,10 +142,10 @@ const OrdersDatail = ({ navigation }) => {
                         </View>
                     </View>
                 </View>
-                
 
 
-                
+
+
             </ScrollView>
 
 
@@ -287,7 +287,7 @@ const styles = StyleSheet.create({
         width: '95%',
         borderRadius: 10,
         margin: 10,
-      backgroundColor:'#F3EEEE'
+        backgroundColor: '#F3EEEE'
 
     },
     txtHeader: {

@@ -21,6 +21,7 @@ import Setting from './src/Setting';
 import MainStackNavigation from './src/navigation/MainStackNavigation';
 import AppNavigation from './src/navigation/AppNavigation';
 import { AppProvide } from './src/AppContext';
+import Orders from './src/Orders';
 
 
 
@@ -30,6 +31,7 @@ function App(): React.JSX.Element {
     <AppProvide>
       <AppNavigation />
     </AppProvide>
+    // <Orders/>
   )
 }
 
