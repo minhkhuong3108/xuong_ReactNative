@@ -12,6 +12,7 @@ import Cart from '../Cart';
 import Search from '../Serach';
 import Orders from '../Orders';
 import OrdersDatail from '../OrdersDetail';
+import Payment from '../Payment';
 
 
 const Stack = createNativeStackNavigator();
@@ -35,6 +36,7 @@ const MainStackNavigation = () => {
       <Stack.Screen name='Orders' component={Orders} />
       <Stack.Screen name='OrdersDatail' component={OrdersDatail} />
       <Stack.Screen name='Cart' component={Cart} />
+      <Stack.Screen name='Payment' component={Payment} />
 
 
 
