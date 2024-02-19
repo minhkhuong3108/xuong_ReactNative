@@ -39,7 +39,7 @@ const Orders = ({ navigation }) => {
               <View style={styles.viewContainer}>
                 <View style={styles.viewNoMarginRow}>
                   <View>
-                    <Text style={styles.txtName}>Id:{product.id}</Text>
+                    <Text style={styles.txtName}>Id Product:{product.id}</Text>
                     <Text style={styles.txtName}>Name: {product.name}</Text>
                     <Text style={styles.txtQuantity}>Quantity: 1</Text>
                     <Text style={styles.txtPriceItem}>
@@ -115,7 +115,7 @@ const styles = StyleSheet.create({
   txtDate: {
     color: '#000',
     fontSize: 14,
-    fontWeight: 'bold'
+    // fontWeight: 'bold'
   },
   txtHeadDate: {
     color: '#000',
