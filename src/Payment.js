@@ -1,4 +1,4 @@
-import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { Image, Modal, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import React, { useContext, useEffect, useState } from 'react'
 import { AppContext } from './AppContext'
 import moment from 'moment'
@@ -6,26 +6,25 @@ import moment from 'moment'
 const Payment = ({ navigation }) => {
     const { history, setHistory, cart, setCart } = useContext(AppContext)
     const [checked, setChecked] = useState(false)
-
+    const [visible, setVisible] = useState(false)
+    const closeModal = () => {
+        setVisible(false)
+    }
     const callAPI = () => {
-        // const cartItems = cart.map(product => ({
-        //     'id': product.id,
-        //     'name': product.name,
-        //     'price': product.price,
-        //     'image': product.image,
-        //     'quantity': 1,
-        // }));
         const currentDate = moment();
-
-        // Format ngày theo định dạng bạn muốn
+        // Format ngày theo định dạng
         const formattedDate = currentDate.format('DD/MM/YYYY HH:mm');
-        const historyDate = {
-            'date':formattedDate,
+        const body = {
+            'date': formattedDate,
             'products': cart
         }
-        setHistory([...history, historyDate])
+        setHistory([...history, body])
         setCart([])
         navigation.navigate('TabHome')
+    }
+
+    const showModal = () => {
+        setVisible(true)
     }
     return (
 
@@ -60,9 +59,31 @@ const Payment = ({ navigation }) => {
                 </TouchableOpacity>
             </View>
 
-            <TouchableOpacity style={styles.btnCheckout} onPress={callAPI}>
+            <TouchableOpacity style={styles.btnCheckout} onPress={showModal}>
                 <Text style={styles.txtCheckout}>Checkout</Text>
             </TouchableOpacity>
+
+            <Modal
+                animationType='fade'
+                transparent={true}
+                visible={visible}
+                onRequestClose={closeModal}
+            >
+                <View style={styles.viewModalCotainer}>
+                    <View style={styles.viewModal}>
+                        <Text style={styles.txtModal}>Are you sure you want to checkout?</Text>
+
+                        <View style={styles.viewBtnModal}>
+                            <TouchableOpacity style={styles.btnNoModal} onPress={closeModal}>
+                                <Text style={styles.txtModal}>No</Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity style={styles.btnYesModal} onPress={callAPI}>
+                                <Text style={styles.txtModal}>Yes</Text>
+                            </TouchableOpacity>
+                        </View>
+                    </View>
+                </View>
+            </Modal>
         </View>
     )
 }
@@ -70,6 +91,48 @@ const Payment = ({ navigation }) => {
 export default Payment
 
 const styles = StyleSheet.create({
+    btnYesModal: {
+        width: 133,
+        height: 47,
+        borderRadius: 20,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: '#FBDE3F'
+    },
+    btnNoModal: {
+        width: 133,
+        height: 47,
+        borderRadius: 20,
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+    viewBtnModal: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center'
+    },
+    txtModal: {
+        fontSize: 16,
+        fontWeight: 'bold',
+        color: '#000'
+    },
+    viewModal: {
+        paddingHorizontal: 35,
+        paddingVertical: 25,
+        width: '100%',
+        height: 172,
+        borderRadius: 20,
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        backgroundColor: '#fff'
+    },
+    viewModalCotainer: {
+        paddingHorizontal: 20,
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: '#D9D9D94D'
+    },
     txtCheckout: {
         color: '#000',
         fontSize: 18,

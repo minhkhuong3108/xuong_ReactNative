@@ -42,7 +42,7 @@ const Home = ({ navigation }) => {
           <Text style={styles.txtSale}>{sale}</Text>
         </View>
 
-        <TouchableOpacity style={styles.btnFavorite} onPress={() => { setFavorited(id) }}>
+        <TouchableOpacity style={styles.btnFavorite}>
           {
             id === favorited ? <Image style={styles.imgFavorite} source={require('../assets/images/home/product_feature/favorite.png')} />
               : <Image style={styles.imgFavorite} source={require('../assets/images/home/product_feature/no_favorite.png')} />

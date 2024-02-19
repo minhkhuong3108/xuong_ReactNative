@@ -8,10 +8,10 @@ export const AppProvide = (props) => {
     const [cart, setCart] = useState([])
     const [isLogin, setIsLogin] = useState(false)
     const [history, setHistory] = useState([])
+    const [favorited, setFavorited] = useState([])
     console.log(history);
-    console.log(cart);
     return (
-        <AppContext.Provider value={{ cart, setCart, isLogin, setIsLogin, history, setHistory }}>
+        <AppContext.Provider value={{ cart, setCart, isLogin, setIsLogin, history, setHistory, favorited, setFavorited }}>
             {children}
         </AppContext.Provider>
     )
