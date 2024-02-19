@@ -22,34 +22,54 @@ const ProductDetails = ({ navigation, route }) => {
         getProduct()
     }, [id])
 
-    const {cart, setCart} = useContext(AppContext)
+    const { cart, setCart, favorited, setFavorited } = useContext(AppContext)
 
-    const addToCart=()=>{
-        const cartItem ={
-            'id':product.id,
-            'name':product.name,
-            'price':product.price,
-            'image':product.image,
+    const addToCart = () => {
+        const cartItem = {
+            'id': product.id,
+            'name': product.name,
+            'price': product.price,
+            'image': product.image,
             'quantity': 1,
         }
         const index = cart.findIndex(item => item.id == product.id)
-        if (index==-1){
+        if (index == -1) {
             setCart([...cart, cartItem])
-        }else{
+        } else {
             cart[index].quantity++
             setCart([...cart])
         }
         ToastAndroid.show('Thêm sản phẩm thành công', ToastAndroid.LONG)
     }
+    const checkFavorited = () => {
+        const index = favorited.findIndex(item => item.id == product.id)
+        if (index == -1) {
+            return false
+        }
+        return true
+    }
+    const addToFavorite = () => {
+        const index = favorited.findIndex(item => item.id == product.id)
+        if (index == -1) {
+            setFavorited([...favorited, product])
+        } else {
+            const newFavorite = [...favorited]
+            newFavorite.splice(index, 1)
+            setFavorited(newFavorite)
+        }
+    }
     return (
-        <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
+        <View style={styles.container} showsVerticalScrollIndicator={false}>
             <View style={styles.viewBackground}>
                 <TouchableOpacity style={styles.btnBack} onPress={pressBack}>
                     <Image style={styles.imgBack} source={require('../assets/images/back.png')} />
                 </TouchableOpacity>
 
-                <TouchableOpacity style={styles.btnFavorite}>
-                    <Image source={require('../assets/images/product_details/heart_black.png')} />
+                <TouchableOpacity style={styles.btnFavorite} onPress={addToFavorite}>
+                    {
+                        checkFavorited() ? <Image source={require('../assets/images/product_details/favorite.png')} /> :
+                            <Image source={require('../assets/images/product_details/heart_black.png')} />
+                    }
                 </TouchableOpacity>
                 <Image style={styles.imgBackground} source={require('../assets/images/product_details/background.png')} />
             </View>
@@ -141,7 +161,7 @@ const ProductDetails = ({ navigation, route }) => {
 
 
 
-        </ScrollView>
+        </View>
     )
 }
 
@@ -265,7 +285,7 @@ const styles = StyleSheet.create({
         marginTop: 17
     },
     txtName: {
-        marginTop: 84,
+        marginTop: 70,
         fontSize: 26,
         fontWeight: 'bold',
         color: '#000'
@@ -284,14 +304,14 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff',
         width: '100%',
         height: 632,
-        marginTop: 222,
+        marginTop: 200,
         borderTopRightRadius: 40,
         borderTopLeftRadius: 40,
     },
     btnFavorite: {
         position: 'absolute',
         right: 24,
-        top: 42,
+        top: 20,
         backgroundColor: '#fff',
         width: 38,
         height: 34,
@@ -303,7 +323,7 @@ const styles = StyleSheet.create({
     btnBack: {
         position: 'absolute',
         left: 24,
-        top: 42,
+        top: 20,
         backgroundColor: '#fff',
         width: 38,
         height: 35,

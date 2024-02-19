@@ -14,6 +14,7 @@ const Orders = ({ navigation }) => {
     navigation.goBack()
   }
   const { history, setHistory } = useContext(AppContext)
+
   // const totalPrice = cart.reduce((total, item) => {
   //   return total + item.price * item.quantity
   // }, 0)
@@ -22,24 +23,33 @@ const Orders = ({ navigation }) => {
   //   return totalQuantity + item.quantity
   // }, 0)
 
-
   const renderItem = ({ item }) => {
     // const { id, name, price, image, quantity } = item
-
+    const totalPrice = item.products.reduce((total, item) => {
+      return total + item.price * item.quantity
+    }, 0)
     return (
       <View>
-        <View style={styles.viewDate}>
-          <Text style={styles.txtHeadDate}>Order Date:</Text>
-          <Text style={styles.txtDate}>{item.date}</Text>
+        <View style={styles.viewDatePrice}>
+          <View>
+            <Text style={styles.txtHeadDate}>Order Date:</Text>
+            <Text style={styles.txtDate}>{item.date}</Text>
+          </View>
+
+          <View>
+            <Text style={styles.txtHeadDate}>Total Price</Text>
+            <Text style={styles.txtTotalPrice}>{totalPrice.toFixed(2)}</Text>
+          </View>
         </View>
         {
           item.products.map(product => {
-            const totalPrice = product.price * product.quantity
+            const totalPriceItem = product.price * product.quantity
+
             return (
               <View style={styles.viewContainer}>
                 <View style={styles.viewNoMarginRow}>
                   <View>
-                    <Text style={styles.txtName}>Id Product:{product.id}</Text>
+                    <Text style={styles.txtName}>Id Product: {product.id}</Text>
                     <Text style={styles.txtName}>Name: {product.name}</Text>
                     <Text style={styles.txtQuantity}>Quantity: 1</Text>
                     <Text style={styles.txtPriceItem}>
@@ -56,7 +66,7 @@ const Orders = ({ navigation }) => {
                     <Text style={styles.textRow}>Total quantity: {product.quantity}</Text>
                   </View>
                   <View style={styles.viewQuantity2}>
-                    <Text style={styles.textRow}>SubTotal: {totalPrice} </Text>
+                    <Text style={styles.textRow}>SubTotal: {totalPriceItem} </Text>
                   </View>
                   <TouchableOpacity
                     onPress={() => navigation.navigate('ProductHot')}
@@ -89,7 +99,7 @@ const Orders = ({ navigation }) => {
         showsVerticalScrollIndicator={false}
         data={history}
         renderItem={renderItem}
-        keyExtractor={product => product.id}
+        keyExtractor={item => item.id}
       />
     </View>
   )
@@ -108,9 +118,16 @@ const Orders = ({ navigation }) => {
 export default Orders
 
 const styles = StyleSheet.create({
-  viewDate: {
+  viewDatePrice: {
     margin: 10,
-
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center'
+  },
+  txtTotalPrice: {
+    color: '#000',
+    fontSize: 16,
+    textAlign: 'right',
   },
   txtDate: {
     color: '#000',

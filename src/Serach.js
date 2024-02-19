@@ -114,7 +114,7 @@ function Search({ navigation }) {
 
             <View style={styles.Class3}>
                 
-                {filteredFoods().length > 0 ?
+                
                     <FlatList
                         data={filteredFoods()}
                         numColumns={2} //phân thành 2 cột
@@ -122,10 +122,8 @@ function Search({ navigation }) {
                         renderItem={renderItem}
                     keyExtractor={eachFood => eachFood.name}
                     columnWrapperStyle={{ justifyContent: 'flex-end' }}
-                    /> : <View style={styles.Alerts}>
-                        <Text style={styles.AleartsDoc}>No food found</Text>
-                    </View>
-                }
+                    /> 
+                
 
             </View>
 
