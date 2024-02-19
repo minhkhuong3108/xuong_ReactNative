@@ -4,7 +4,8 @@ import {
 } from 'react-native';
 import { icons, } from '../constants';
 import AxiosInstance from './helpers/AxiosInstance';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
+import { AppContext } from './AppContext';
 
 
 
@@ -12,6 +13,7 @@ const Orders = ({ navigation }) => {
   const backHome = () => {
     navigation.goBack()
   }
+  const { history, setHistory } = useContext(AppContext)
   // const totalPrice = cart.reduce((total, item) => {
   //   return total + item.price * item.quantity
   // }, 0)
@@ -21,29 +23,58 @@ const Orders = ({ navigation }) => {
   // }, 0)
 
 
-  // const renderItem = ({ item }) => {
-  //   const { id, name, price, image } = item
-  //   return (
-  //     <TouchableOpacity
-  //       onPress={() => { navigation.navigate('ProductDetails', id) }}
-  //       style={styles.container}>
-  //       <View style={styles.Class3Item}>
-  //         <View style={styles.itemItem}>
-  //           <Image source={{ uri: image }}
-  //             style={styles.imageItem} />
-  //           <View style={styles.ClassChild}>
-  //             <Text style={styles.nameItem}>{name}</Text>
-  //             <Text style={styles.priceItem}> <Text style={styles.dollar}>$</Text> {price}</Text>
-  //           </View>
-  //         </View>
-  //       </View>
-  //     </TouchableOpacity>
-  //   )
-  // }
+  const renderItem = ({ item }) => {
+    // const { id, name, price, image, quantity } = item
+
+    return (
+      <View>
+        <View style={styles.viewDate}>
+          <Text style={styles.txtHeadDate}>Order Date:</Text>
+          <Text style={styles.txtDate}>{item.date}</Text>
+        </View>
+        {
+          item.products.map(product => {
+            const totalPrice = product.price * product.quantity
+            return (
+              <View style={styles.viewContainer}>
+                <View style={styles.viewNoMarginRow}>
+                  <View>
+                    <Text style={styles.txtName}>Id:{product.id}</Text>
+                    <Text style={styles.txtName}>Name: {product.name}</Text>
+                    <Text style={styles.txtQuantity}>Quantity: 1</Text>
+                    <Text style={styles.txtPriceItem}>
+                      {/* ${priceItem.toFixed(2)} */}
+                      Price : {product.price}
+                    </Text>
+                  </View>
+                  <View>
+                    <Image style={styles.imgProduct} source={{ uri: product.image }} />
+                  </View>
+                </View>
+                <View style={styles.viewRow}>
+                  <View style={styles.viewQuantity1}>
+                    <Text style={styles.textRow}>Total quantity: {product.quantity}</Text>
+                  </View>
+                  <View style={styles.viewQuantity2}>
+                    <Text style={styles.textRow}>SubTotal: {totalPrice} </Text>
+                  </View>
+                  <TouchableOpacity
+                    onPress={() => navigation.navigate('ProductHot')}
+                    style={styles.viewQuantity3}>
+                    <Text style={styles.textRow}>Continue Buy</Text>
+                  </TouchableOpacity>
+                </View>
+              </View>
+            )
+          })
+        }
+      </View>
+    )
+
+  }
 
   return (
     <View style={styles.container}>
-
       <View style={styles.Class1}>
         <Text style={styles.title}>Orders</Text>
         <TouchableOpacity onPress={backHome}
@@ -54,56 +85,43 @@ const Orders = ({ navigation }) => {
         </TouchableOpacity>
       </View>
 
-      <View style={styles.viewContainer}>
-        <View style={styles.viewNoMarginRow}>
-          <View>
-            <Text style={styles.txtName}>Id:01</Text>
-            <Text style={styles.txtName}>Name: Buger king</Text>
-            <Text style={styles.txtQuantity}>Quantity: 1</Text>
-            <Text style={styles.txtPriceItem}>
-              {/* ${priceItem.toFixed(2)} */}
-              Price : 80$
-            </Text>
-          </View>
-          <View>
-            <Image style={styles.imgProduct} source={require('../assets/images/home/product_hot/product1.png')} />
-          </View>
-        </View>
-        <View style={styles.viewRow}>
-          <View style={styles.viewQuantity1}>
-            <Text style={styles.textRow}>Total quantity : 3</Text>
-          </View>
-          <View style={styles.viewQuantity2}>
-            <Text style={styles.textRow}>SubTotal: 180$ </Text>
-          </View>
-          <TouchableOpacity
-            onPress={() => navigation.navigate('OrdersDatail')}
-            style={styles.viewQuantity3}>
-            <Text style={styles.textRow}>product details</Text>
-          </TouchableOpacity>
-        </View>
-      </View>
-
-
-
-
+      <FlatList
+        showsVerticalScrollIndicator={false}
+        data={history}
+        renderItem={renderItem}
+        keyExtractor={product => product.id}
+      />
     </View>
   )
 }
 
 // <View style={styles.Class3}>
 
-//   <FlatList
-//     showsVerticalScrollIndicator={false}
-//     numColumns={2}
-//     data={hot}
-//     renderItem={renderItem}
-//     keyExtractor={item => item.id} />
+// <FlatList
+//   showsVerticalScrollIndicator={false}
+//   numColumns={2}
+//   data={hot}
+//   renderItem={renderItem}
+//   keyExtractor={item => item.id} />
 
 // </View>
 export default Orders
 
 const styles = StyleSheet.create({
+  viewDate: {
+    margin: 10,
+
+  },
+  txtDate: {
+    color: '#000',
+    fontSize: 14,
+    fontWeight: 'bold'
+  },
+  txtHeadDate: {
+    color: '#000',
+    fontSize: 16,
+    fontWeight: 'bold'
+  },
   txtPriceItem: {
     fontSize: 15,
     color: '#000',

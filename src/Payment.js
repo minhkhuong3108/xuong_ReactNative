@@ -1,9 +1,34 @@
 import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
-import React, { useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
+import { AppContext } from './AppContext'
+import moment from 'moment'
 
 const Payment = ({ navigation }) => {
+    const { history, setHistory, cart, setCart } = useContext(AppContext)
     const [checked, setChecked] = useState(false)
+
+    const callAPI = () => {
+        // const cartItems = cart.map(product => ({
+        //     'id': product.id,
+        //     'name': product.name,
+        //     'price': product.price,
+        //     'image': product.image,
+        //     'quantity': 1,
+        // }));
+        const currentDate = moment();
+
+        // Format ngày theo định dạng bạn muốn
+        const formattedDate = currentDate.format('DD/MM/YYYY HH:mm');
+        const historyDate = {
+            'date':formattedDate,
+            'products': cart
+        }
+        setHistory([...history, historyDate])
+        setCart([])
+        navigation.navigate('TabHome')
+    }
     return (
+
         <View style={styles.container}>
             <View >
                 <View style={styles.viewRowHead}>
@@ -14,28 +39,28 @@ const Payment = ({ navigation }) => {
                 </View>
                 <Text style={styles.txtSubHead}>Payment Method</Text>
 
-                <View style={styles.viewRowBody}>
-                    <TouchableOpacity onPress={() => { setChecked(!checked) }}>
+                <TouchableOpacity style={styles.viewRowBody} onPress={() => { setChecked(!checked) }}>
+                    <TouchableOpacity>
                         {
                             checked ? <Image source={require('../assets/images/Payment/nochoose.png')} /> : <Image source={require('../assets/images/Payment/choose.png')} />
                         }
                     </TouchableOpacity>
                     <Image source={require('../assets/images/Payment/credit.png')} style={styles.imgcredit} />
                     <Text style={styles.txtCredit}>Credit / Debit card </Text>
-                </View>
+                </TouchableOpacity>
 
-                <View style={styles.viewRowBodyNoBorder}>
-                    <TouchableOpacity onPress={() => { setChecked(!checked) }}>
+                <TouchableOpacity style={styles.viewRowBodyNoBorder} onPress={() => { setChecked(!checked) }}>
+                    <TouchableOpacity>
                         {
                             checked ? <Image source={require('../assets/images/Payment/choose.png')} /> : <Image source={require('../assets/images/Payment/nochoose.png')} />
                         }
                     </TouchableOpacity>
                     <Image source={require('../assets/images/Payment/cash.png')} style={styles.imgcredit} />
                     <Text style={styles.txtCredit}>Cash on Delivery </Text>
-                </View>
+                </TouchableOpacity>
             </View>
 
-            <TouchableOpacity style={styles.btnCheckout}>
+            <TouchableOpacity style={styles.btnCheckout} onPress={callAPI}>
                 <Text style={styles.txtCheckout}>Checkout</Text>
             </TouchableOpacity>
         </View>
