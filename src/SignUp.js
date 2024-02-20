@@ -1,8 +1,36 @@
-import { StyleSheet, Text, View, Image, TextInput, Pressable, TouchableOpacity } from 'react-native'
+import { StyleSheet, Text, View, Image, TextInput, Pressable, TouchableOpacity, Alert } from 'react-native'
 import React, { useState } from 'react'
 import BouncyCheckbox from 'react-native-bouncy-checkbox'
+import AxiosInstance from './helpers/AxiosInstance'
 
 const SignUp = ({navigation}) => {
+    const [email, setEmail] = useState('nam123322@gmail.com')
+    const [pass, setPass] = useState('123')
+    const [rePass, setRePass] = useState('123')
+    const [name, setName] = useState('tii')
+
+    // const pressRegister= async()=>{
+    //     try {
+    //         if(pass!==rePass){
+    //             Alert.alert('Password không khớp')
+    //             return;
+    //         }
+    //         const body = {
+    //             email:email,
+    //             password:pass,
+    //         }
+    //         const response= await AxiosInstance().post('/users', body)
+    //         console.log(response)
+    //         if(response.status==true){
+    //             navigation.navigate('Login')
+    //         }else{
+    //             Alert.alert('Đăng ký thất bại')
+    //         }
+    //     } catch (error) {
+    //         console.log(error);
+    //         Alert.alert('Đăng ký có lỗi')
+    //     }
+    // }
     const handlePress = ()=>{
         navigation.navigate('Login')
     }
@@ -14,10 +42,10 @@ const SignUp = ({navigation}) => {
             <Image source={require('../assets/images/logoLogin.png')}/>
         </View>
 
-        <TextInput style={styles.textInput} placeholder='Username'/>
+        <TextInput style={styles.textInput} placeholder='Username' value={email} onChangeText={(text)=> setEmail(text)}/>
         
         <View style={styles.viewPass}>
-            <TextInput style={styles.textInput} placeholder='Password' secureTextEntry={hiddenPass}/>
+            <TextInput style={styles.textInput} placeholder='Password' secureTextEntry={hiddenPass} value={pass} onChangeText={(text)=> setPass(text)}/>
             <TouchableOpacity style={styles.imgEyes} onPress={()=> setHiddenPass(!hiddenPass)}>
                 {
                 hiddenPass ? <Image  source={require('../assets/images/eyes.png')}/>: <Image source={require('../assets/images/eyes.png')}/>
@@ -26,7 +54,7 @@ const SignUp = ({navigation}) => {
         </View>
 
         <View style={styles.viewPass}>
-            <TextInput style={styles.textInput} placeholder='Confirm Password' secureTextEntry={hiddenRePass}/>
+            <TextInput style={styles.textInput} placeholder='Confirm Password' secureTextEntry={hiddenRePass} value={rePass} onChangeText={(text)=> setRePass(text)}/>
             <TouchableOpacity style={styles.imgEyes} onPress={()=> setHiddenRePass(!hiddenRePass)}>
                 {
                 hiddenRePass ? <Image  source={require('../assets/images/eyes.png')}/>: <Image source={require('../assets/images/eyes.png')}/>
@@ -39,9 +67,9 @@ const SignUp = ({navigation}) => {
             {/* <Text style={{color:'#000', fontWeight: '500'}}>Forgot the password ?</Text> */}
         </View>
 
-        <Pressable style={styles.btnLogin}>
+        <TouchableOpacity style={styles.btnLogin}>
             <Text style={styles.textLogin}>Sign up</Text>
-        </Pressable>
+        </TouchableOpacity>
 
         <View style={styles.viewOr}>
             <Text style={styles.textOr}>or continue with</Text>
