@@ -20,6 +20,7 @@ import { NavigationContainer } from '@react-navigation/native';
 
 
 
+
 function App(): React.JSX.Element {
 
   return (
@@ -30,10 +31,9 @@ function App(): React.JSX.Element {
     </SafeAreaView>
 
     <AppProvide>
-      <AppNavigation/>
+      <AppNavigation />
     </AppProvide>
 
-  )
 }
 
 

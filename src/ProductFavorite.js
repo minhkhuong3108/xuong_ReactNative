@@ -123,14 +123,13 @@ const styles = StyleSheet.create({
     },
     Class3: {
         flexDirection: 'row',
-
         flex: 1
 
     },
     container: {
         alignItems: 'center',
         flex: 1,
-
+        backgroundColor:'#fff'
     },
 
 
