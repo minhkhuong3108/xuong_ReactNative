@@ -1,4 +1,4 @@
-import { Image, Modal, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { Image, Modal, StyleSheet, Text, ToastAndroid, TouchableOpacity, View } from 'react-native'
 import React, { useContext, useEffect, useState } from 'react'
 import { AppContext } from './AppContext'
 import moment from 'moment'
@@ -20,6 +20,7 @@ const Payment = ({ navigation }) => {
         }
         setHistory([...history, body])
         setCart([])
+        ToastAndroid.show('Đặt hàng thành công', ToastAndroid.LONG)
         navigation.navigate('TabHome')
     }
 
