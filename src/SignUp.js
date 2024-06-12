@@ -2,11 +2,12 @@ import { StyleSheet, Text, View, Image, TextInput, Pressable, TouchableOpacity, 
 import React, { useState } from 'react'
 import BouncyCheckbox from 'react-native-bouncy-checkbox'
 import AxiosInstance from './helpers/AxiosInstance'
+import Login from './Login'
 
 const SignUp = ({navigation}) => {
-    const [email, setEmail] = useState('nam123322@gmail.com')
-    const [pass, setPass] = useState('123')
-    const [rePass, setRePass] = useState('123')
+    const [email, setEmail] = useState('')
+    const [pass, setPass] = useState('')
+    const [rePass, setRePass] = useState('')
     const [name, setName] = useState('tii')
 
     // const pressRegister= async()=>{
@@ -32,6 +33,10 @@ const SignUp = ({navigation}) => {
     //     }
     // }
     const handlePress = ()=>{
+        navigation.navigate('Login')
+    }
+    const handleLogin=()=>{
+        Alert.alert('Đăng ký thành công')
         navigation.navigate('Login')
     }
     const [hiddenPass, setHiddenPass] = useState(true)
@@ -67,7 +72,7 @@ const SignUp = ({navigation}) => {
             {/* <Text style={{color:'#000', fontWeight: '500'}}>Forgot the password ?</Text> */}
         </View>
 
-        <TouchableOpacity style={styles.btnLogin}>
+        <TouchableOpacity style={styles.btnLogin} onPress={handleLogin}>
             <Text style={styles.textLogin}>Sign up</Text>
         </TouchableOpacity>
 

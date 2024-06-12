@@ -6,11 +6,10 @@ import { AppContext } from '../AppContext'
 import AuthNavigation from './AuthNavigation'
 
 const AppNavigation = () => {
-    const {isLogin}= useContext(AppContext)
   return (
     <NavigationContainer>
        {
-        isLogin ? <MainStackNavigation/> : <AuthNavigation/>
+          <MainStackNavigation/>
        } 
     </NavigationContainer>
   )

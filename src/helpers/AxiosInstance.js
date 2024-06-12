@@ -3,7 +3,7 @@ import axios from 'axios';
 
 const AxiosInstance = (contentType = 'application/json') => {
     const axiosInstance = axios.create({
-        baseURL: 'https://65c4cabfdae2304e92e35bd6.mockapi.io/'
+        baseURL: 'http://192.168.1.150:8888/'
     });
 
     axiosInstance.interceptors.request.use(

@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, Image, TextInput, Pressable, TouchableOpacity } from 'react-native'
+import { StyleSheet, Text, View, Image, TextInput, Pressable, TouchableOpacity, Alert } from 'react-native'
 import React, { useContext, useState } from 'react'
 import { NavigationContainer } from '@react-navigation/native';
 // khai báo stack
@@ -6,12 +6,15 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { AppContext } from './AppContext';
 
 const Login = ({navigation}) => {
-    const {isLogin, setIsLogin} = useContext(AppContext)
+    // const {isLogin, setIsLogin} = useContext(AppContext)
+    const [email, setEmail] = useState('')
+    const [pass, setPass] = useState('')
     const handlePress = ()=>{
         navigation.navigate('Sign up')
     }
     
     const pressHome=()=>{
+    
         navigation.navigate('Home')
     }
     const [hiddenPass, setHiddenPass] = useState(true)
@@ -40,7 +43,7 @@ const Login = ({navigation}) => {
             <Text style={{color:'#000', fontWeight: '500'}}>Forgot the password ?</Text>
         </View>
 
-        <TouchableOpacity style={styles.btnLogin} onPress={()=>{setIsLogin(true)}}>
+        <TouchableOpacity style={styles.btnLogin} onPress={()=>{pressHome}}>
             <Text style={styles.textLogin}>Login</Text>
         </TouchableOpacity>
 
