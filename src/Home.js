@@ -1,8 +1,36 @@
 import { FlatList, Image, ImageBackground, Pressable, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import AxiosInstance from './helpers/AxiosInstance'
+import { useSelector, useDispatch } from 'react-redux'
+import { getProduct } from './API/ProductAPI'
 
 const Home = ({ navigation }) => {
+
+  const dispatch = useDispatch()
+  const { data } = useSelector(state => state.getProduct)
+  const [products, setProducts] = useState([])
+
+  const getProducts = async () => {
+    try {
+      dispatch(getProduct())
+    } catch (error) {
+      console.log(error);
+    }
+  }
+  useEffect(() => {
+    getProducts()
+  }, [])
+
+  useEffect(() => {
+    try {
+      if (data.length > 0) {
+        setProducts(data)
+      }
+    } catch (error) {
+
+    }
+  }, [data])
+
   const pressHot = () => {
     navigation.navigate('ProductHot')
   }
@@ -17,6 +45,7 @@ const Home = ({ navigation }) => {
   const [search, setSearch] = useState('')
 
   const [category, setCatogery] = useState(loai)
+
 
 
   const renderItemCategory = ({ item, index }) => {
@@ -80,9 +109,9 @@ const Home = ({ navigation }) => {
     getProduct()
   }, [])
   const renderItemHot = ({ item, index }) => {
-    const { id, name, price, image } = item
+    const { _id, name, price, image } = item
     return (
-      <TouchableOpacity style={[styles.viewHot, index === 2 && styles.itemLast]} onPress={() => { navigation.navigate('ProductDetails', id) }}>
+      <TouchableOpacity style={[styles.viewHot, index === 2 && styles.itemLast]} onPress={() => { navigation.navigate('ProductDetails', _id) }}>
         <View style={styles.viewImgHot}>
           <ImageBackground style={{ width: 143, height: 108 }} source={{ uri: image }} />
         </View>
@@ -90,7 +119,7 @@ const Home = ({ navigation }) => {
           <Text style={styles.txtNameHot}>{name}</Text>
           <Text style={styles.txtPriceHot}>
             <Text style={{ color: '#FFC532' }}>$</Text>
-            {price}
+            {price}.00
           </Text>
         </View>
       </TouchableOpacity>
@@ -173,7 +202,7 @@ const Home = ({ navigation }) => {
         <FlatList
           horizontal
           showsHorizontalScrollIndicator={false}
-          data={hot.slice(0, 3)}
+          data={products}
           renderItem={renderItemHot}
           keyExtractor={item => item.id}
         />

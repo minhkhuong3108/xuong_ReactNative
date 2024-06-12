@@ -22,15 +22,17 @@ import MainStackNavigation from './src/navigation/MainStackNavigation';
 import AppNavigation from './src/navigation/AppNavigation';
 import { AppProvide } from './src/AppContext';
 import Orders from './src/Orders';
+import { Provider } from 'react-redux';
+import store from './src/reducers/Store';
 
 
 
 function App(): React.JSX.Element {
 
   return (
-    <AppProvide>
+    <Provider store={store}>
       <AppNavigation />
-    </AppProvide>
+    </Provider>
     // <Orders/>
   )
 }

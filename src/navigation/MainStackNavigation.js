@@ -13,6 +13,9 @@ import Search from '../Serach';
 import Orders from '../Orders';
 import OrdersDatail from '../OrdersDetail';
 import Payment from '../Payment';
+import Welcome from '../Welcome';
+import Login from '../Login';
+import SignUp from '../SignUp';
 
 
 const Stack = createNativeStackNavigator();
@@ -29,6 +32,9 @@ const CustomTabBarButton = ({ children, onPress }) => (
 const MainStackNavigation = () => {
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>
+      <Stack.Screen name='Welcome' component={Welcome} />
+      <Stack.Screen name='Login' component={Login} />
+      <Stack.Screen name='Sign up' component={SignUp} />
       <Stack.Screen name='Home' component={AppTab} />
       <Stack.Screen name='ProductHot' component={Foodoo} />
       <Stack.Screen name='ProductDetails' component={ProductDetails} />
