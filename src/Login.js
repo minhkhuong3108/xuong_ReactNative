@@ -16,7 +16,14 @@ const Login = ({navigation}) => {
     const [errorPass, setErrorPass] = useState('')
     const dispatch = useDispatch()
     const { loginData } = useSelector(state => state.login)
-    console.log(loginData);
+    // console.log(loginData);
+    const validateEmail = (email) => {
+        const re = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+        return re.test(String(email).toLowerCase());
+      };
+      const validatePassword = (password) => {
+        return password.length >= 6 && password.length <= 16;
+      };
     const handlePress = ()=>{
         navigation.navigate('Sign up')
     }
@@ -44,6 +51,14 @@ const Login = ({navigation}) => {
             }
             if (!password) {
                 setErrorPass('Vui lòng nhập mật khẩu')
+                return
+            }
+            if(!validateEmail(email)){
+                setErrorEmail('Vui lòng nhập đúng định dạng email')
+                return
+            }
+            if(!validatePassword(password)){
+                setErrorPass('Password tối thiểu phải 6 ký tự và tối đa 16 ký tự')
                 return
             }
             const body = { email, password }
