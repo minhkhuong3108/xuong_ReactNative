@@ -109,11 +109,11 @@ const Home = ({ navigation }) => {
     getProduct()
   }, [])
   const renderItemHot = ({ item, index }) => {
-    const { _id, name, price, image } = item
+    const { _id, name, price, images } = item
     return (
-      <TouchableOpacity style={[styles.viewHot, index === 2 && styles.itemLast]} onPress={() => { navigation.navigate('ProductDetails', _id) }}>
+      <TouchableOpacity style={[styles.viewHot]} onPress={() => { navigation.navigate('ProductDetails',{id:_id}) }}>
         <View style={styles.viewImgHot}>
-          <ImageBackground style={{ width: 143, height: 108 }} source={{ uri: image }} />
+          <Image style={{ width: 143, height: 108 }} source={{ uri: images[0] }} />
         </View>
         <View style={styles.viewSubHot}>
           <Text style={styles.txtNameHot}>{name}</Text>
@@ -204,7 +204,7 @@ const Home = ({ navigation }) => {
           showsHorizontalScrollIndicator={false}
           data={products}
           renderItem={renderItemHot}
-          keyExtractor={item => item.id}
+          keyExtractor={item => item._id}
         />
       </View>
 

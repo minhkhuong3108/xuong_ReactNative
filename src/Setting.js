@@ -1,7 +1,13 @@
 import { Image, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import React from 'react'
+import { useDispatch } from 'react-redux'
+import { logout } from './reducers/LoginSlice'
 
-const Setting = ({navigation}) => {
+const Setting = ({ navigation }) => {
+  const dispatch = useDispatch()
+  const handlelogout = () => {
+    dispatch(logout())
+  }
   return (
     <ScrollView style={styles.container}>
       <View style={styles.viewAvatar}>
@@ -43,7 +49,7 @@ const Setting = ({navigation}) => {
 
 
 
-        <TouchableOpacity style={styles.viewFeatureItem} onPress={()=>{navigation.navigate('Orders')}}>
+        <TouchableOpacity style={styles.viewFeatureItem} onPress={() => { navigation.navigate('Orders') }}>
           <View style={styles.imgFeatureItem}>
             <Image source={require('../assets/images/Setting/order.png')} />
           </View>
@@ -82,7 +88,9 @@ const Setting = ({navigation}) => {
         <View style={styles.viewTxtFeatureNoImg}>
           <Text style={styles.txtFeatureNoImg}>Settings</Text>
           <Text style={styles.txtFeatureNoImg}>Terms & Condition / Privacy</Text>
-          <Text style={styles.txtFeatureNoImg}>Log out</Text>
+          <TouchableOpacity onPress={handlelogout}>
+            <Text style={styles.txtFeatureNoImg}>Log out</Text>
+          </TouchableOpacity>
         </View>
       </View>
     </ScrollView>
