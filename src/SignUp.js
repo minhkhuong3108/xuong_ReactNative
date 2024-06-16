@@ -19,7 +19,14 @@ const SignUp = ({ navigation }) => {
     // const [errorPhone, setErrorPhone] = useState('')
     const dispatch = useDispatch()
     const { registerData } = useSelector(state => state.register)
-    console.log(registerData);
+    // console.log(registerData);
+    const validateEmail = (email) => {
+        const re = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+        return re.test(String(email).toLowerCase());
+      };
+      const validatePassword = (password) => {
+        return password.length >= 6 && password.length <= 16;
+      };
 
     const changeEmail = (data) => {
         setEmail(data)
@@ -61,6 +68,14 @@ const SignUp = ({ navigation }) => {
             if (password != rePass) {
                 setErrorPass('Password không khớp')
                 setErrorRePass('Password không khớp')
+                return
+            }
+            if(!validateEmail(email)){
+                setErrorEmail('Vui lòng nhập đúng định dạng email')
+                return
+            }
+            if(!validatePassword(password)){
+                setErrorPass('Password tối thiểu phải 6 ký tự và tối đa 16 ký tự')
                 return
             }
             dispatch(register({ email, password, name }))
