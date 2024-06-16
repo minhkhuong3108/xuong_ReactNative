@@ -6,14 +6,41 @@ import { icons, } from '../constants';
 import AxiosInstance from './helpers/AxiosInstance';
 import React, { useState, useEffect, useContext } from 'react';
 import { AppContext } from './AppContext';
+import { useSelector, useDispatch } from 'react-redux'
+import { getCarts } from './API/CartAPI';
+import moment from 'moment'
+import { format, parseISO } from 'date-fns';
 
 
 
 const Orders = ({ navigation }) => {
+  const { data } = useSelector(state => state.getCart)
+    const { loginData } = useSelector(state => state.login)
+    const [history, setHistory] = useState([])
+    const dispatch = useDispatch()
+    const user = loginData._id
+
+    useEffect(() => {
+      const getCart = async () => {
+          dispatch(getCarts(user))
+      }
+      getCart()
+  }, [])
+
+  useEffect(() => {
+      try {
+          if (data.length > 0) {
+              setHistory(data)
+          }
+      } catch (error) {
+          console.log(error);
+      }
+  }, [data])
+
   const backHome = () => {
     navigation.goBack()
   }
-  const { history, setHistory } = useContext(AppContext)
+  // const { history, setHistory } = useContext(AppContext)
 
   // const totalPrice = cart.reduce((total, item) => {
   //   return total + item.price * item.quantity
@@ -25,15 +52,18 @@ const Orders = ({ navigation }) => {
 
   const renderItem = ({ item }) => {
     // const { id, name, price, image, quantity } = item
-    const totalPrice = item.products.reduce((total, item) => {
+    const { _id, date, products, status, user } = item
+    const totalPrice = products.reduce((total, item) => {
       return total + item.price * item.quantity
     }, 0)
+    const datefns = parseISO(date)
+    const formatDate = format(datefns, "dd/MM/yyyy HH:mm" )
     return (
       <View>
         <View style={styles.viewDatePrice}>
           <View>
             <Text style={styles.txtHeadDate}>Order Date:</Text>
-            <Text style={styles.txtDate}>{item.date}</Text>
+            <Text style={styles.txtDate}>{formatDate}</Text>
           </View>
 
           <View>
@@ -42,31 +72,31 @@ const Orders = ({ navigation }) => {
           </View>
         </View>
         {
-          item.products.map(product => {
-            const totalPriceItem = product.price * product.quantity
-
+          products.map((product,index) => {
+            const { _id, name, images, property, quantity, price } = product
+            const totalPriceItem = price * quantity
             return (
-              <View style={styles.viewContainer}>
+              <View style={styles.viewContainer} key={index}>
                 <View style={styles.viewNoMarginRow}>
                   <View>
-                    <Text style={styles.txtName}>Id Product: {product.id}</Text>
-                    <Text style={styles.txtName}>Name: {product.name}</Text>
+                    <Text style={styles.txtName}>Id Product: {_id}</Text>
+                    <Text style={styles.txtName}>Name: {name}</Text>
                     <Text style={styles.txtQuantity}>Quantity: 1</Text>
                     <Text style={styles.txtPriceItem}>
                       {/* ${priceItem.toFixed(2)} */}
-                      Price : {product.price}
+                      Price : {price.toFixed(2)}
                     </Text>
                   </View>
                   <View>
-                    <Image style={styles.imgProduct} source={{ uri: product.image }} />
+                    <Image style={styles.imgProduct} source={{ uri: product.images[0] }} />
                   </View>
                 </View>
                 <View style={styles.viewRow}>
                   <View style={styles.viewQuantity1}>
-                    <Text style={styles.textRow}>Total quantity: {product.quantity}</Text>
+                    <Text style={styles.textRow}>Total quantity: {quantity}</Text>
                   </View>
                   <View style={styles.viewQuantity2}>
-                    <Text style={styles.textRow}>SubTotal: {totalPriceItem} </Text>
+                    <Text style={styles.textRow}>SubTotal: {totalPriceItem.toFixed(2)} </Text>
                   </View>
                   <TouchableOpacity
                     onPress={() => navigation.navigate('ProductHot')}

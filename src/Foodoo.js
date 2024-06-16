@@ -7,46 +7,74 @@ import { icons, } from '../constants';
 import { Alert } from 'react-native';
 import FoodooItem from './FoodooItem';
 import AxiosInstance from './helpers/AxiosInstance';
-
+import { useSelector, useDispatch } from 'react-redux'
+import { getProduct } from './API/ProductAPI'
 
 function Foodoo({ navigation }) {
-    const [hot, setHot] = useState([])
-    useEffect(() => {
-      const getProduct = async () => {
-        try {
-          const response = await AxiosInstance().get('/hotSpot')
-          setHot(response)
-        } catch (error) {
-          console.log(error);
-        }
-      }
-      getProduct()
-    },[])
+    // const [hot, setHot] = useState([])
+    // useEffect(() => {
+    //   const getProduct = async () => {
+    //     try {
+    //       const response = await AxiosInstance().get('/hotSpot')
+    //       setHot(response)
+    //     } catch (error) {
+    //       console.log(error);
+    //     }
+    //   }
+    //   getProduct()
+    // },[])
 
-    const renderItem= ({item})=>{
-        const {id,name,price, image} = item
-        return(
+    const dispatch = useDispatch()
+    const { data } = useSelector(state => state.getProduct)
+    const [products, setProducts] = useState([])
+
+    const getProducts = async () => {
+        try {
+            dispatch(getProduct())
+        } catch (error) {
+            console.log(error);
+        }
+    }
+    useEffect(() => {
+        getProducts()
+    }, [])
+
+    useEffect(() => {
+        try {
+            if (data.length > 0) {
+                setProducts(data)
+            }
+        } catch (error) {
+
+        }
+    }, [data])
+
+    
+
+    const renderItem = ({ item }) => {
+        const { _id, name, price, images } = item
+        return (
             <TouchableOpacity
-            onPress={()=>{navigation.navigate('ProductDetails',id)}}
-            style={styles.container}>
-            <View style={styles.Class3Item}>
-                <View style={styles.itemItem}>
-                    <Image source={{uri:image}}
-                        style={styles.imageItem} />
-                    <View style={styles.ClassChild}>
-                        <Text style={styles.nameItem}>{name}</Text>
-                        <Text style={styles.priceItem}> <Text style={styles.dollar}>$</Text> {price}</Text>
+                onPress={() => { navigation.navigate('ProductDetails', {id:_id}) }}
+                style={styles.container}>
+                <View style={styles.Class3Item}>
+                    <View style={styles.itemItem}>
+                        <Image source={{ uri: images[0] }}
+                            style={styles.imageItem} />
+                        <View style={styles.ClassChild}>
+                            <Text style={styles.nameItem}>{name}</Text>
+                            <Text style={styles.priceItem}> <Text style={styles.dollar}>$</Text> {price.toFixed(2)}</Text>
+                        </View>
                     </View>
                 </View>
-            </View>
-        </TouchableOpacity>
+            </TouchableOpacity>
         )
     }
     const backHome = () => {
         navigation.goBack()
     }
 
-    
+
     const [foods, setFoods] = useState([
         { id: 1, img: require('../assets/images/product/product1.png'), name: "Extra Meat Burger", price: 9.99 },
         { id: 2, img: require('../assets/images/product/product2.png'), name: "Supreme Pizza", price: 4.45 },
@@ -77,7 +105,7 @@ function Foodoo({ navigation }) {
     const filteredFoods = () =>
         hot.filter(eachFood => eachFood.name.toLowerCase().
             includes(searchText.toLowerCase()))
-    
+
 
     return (
         <View style={styles.container}>
@@ -91,7 +119,7 @@ function Foodoo({ navigation }) {
                 </TouchableOpacity>
 
             </View>
-            
+
             {/* <View style={styles.Class2}
             >
                 <Image
@@ -126,11 +154,11 @@ function Foodoo({ navigation }) {
             <View style={styles.Class3}>
 
                 <FlatList
-                showsVerticalScrollIndicator={false}
-                numColumns={2}
-                data={hot}
-                renderItem={renderItem}
-                keyExtractor={item => item.id}/>
+                    showsVerticalScrollIndicator={false}
+                    numColumns={2}
+                    data={products}
+                    renderItem={renderItem}
+                    keyExtractor={item => item._id} />
 
             </View>
 
@@ -142,12 +170,12 @@ export default Foodoo
 const styles = StyleSheet.create({
     dollar: { color: '#FFC532' },
     ClassChild: {
-        alignItems: 'center', 
+        alignItems: 'center',
         marginTop: 70
     },
     imageItem: {
         width: 170,
-        height:113,
+        height: 113,
         position: 'absolute',
         bottom: 70,
         resizeMode: 'contain',
@@ -174,13 +202,13 @@ const styles = StyleSheet.create({
         shadowRadius: 4,
         elevation: 8,
         marginBottom: 20,
-        alignItems:'center'
+        alignItems: 'center'
     },
     Class3Item: {
         flexDirection: 'row',
         marginTop: 80,
         flex: 1,
-        alignItems:'center'
+        alignItems: 'center'
     },
     AleartsDoc: {
         color: 'black',

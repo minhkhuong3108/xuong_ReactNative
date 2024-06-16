@@ -2,62 +2,103 @@ import { Image, ImageBackground, ScrollView, StyleSheet, Text, ToastAndroid, Tou
 import React, { useContext, useEffect, useState } from 'react'
 import AxiosInstance from './helpers/AxiosInstance'
 import { AppContext } from './AppContext'
+import { getProductDetail } from './API/ProductAPI'
+import { useDispatch, useSelector } from 'react-redux'
+import { addToOrder } from './API/Order'
+
 
 const ProductDetails = ({ navigation, route }) => {
-    const id = route.params
+    const id = route.params.id
     const pressBack = () => {
         navigation.goBack()
     }
-    const [product, setProduct] = useState({})
+    // const [product, setProduct] = useState({})
+    const [productDetail, setProductDetail] = useState({})
+    const { data } = useSelector(state => state.getProductDetail)
+    const dispatch = useDispatch()
+    const { loginData } = useSelector(state => state.login)
+
+    // useEffect(() => {
+    //     const getProduct = async () => {
+    //         try {
+    //             const reponse = await AxiosInstance().get(`/hotSpot/${id}`)
+    //             setProduct(reponse)
+    //         } catch (error) {
+    //             console.log(error);
+    //         }
+    //     }
+    //     getProduct()
+    // }, [id])
 
     useEffect(() => {
-        const getProduct = async () => {
-            try {
-                const reponse = await AxiosInstance().get(`/hotSpot/${id}`)
-                setProduct(reponse)
-            } catch (error) {
-                console.log(error);
-            }
+        const getProductDetails = async () => {
+          try {
+            dispatch(getProductDetail(id))
+          } catch (error) {
+            console.log(error);
+          }
         }
-        getProduct()
-    }, [id])
+        getProductDetails()
+      }, [])
+    
+      useEffect(() => {
+        try {
+          setProductDetail(data)
+        } catch (error) {
+          console.log(error);
+        }
+      }, [data])
+    
+      const addToCart = async () => {
+        try {
+          const user = loginData._id
+          const product = productDetail._id
+          dispatch(addToOrder({ user, product }))
+          ToastAndroid.show('Đã thêm sản phẩm vào giỏ hàng', ToastAndroid.SHORT)
+          console.log('user:', user);
+          // navigation.navigate('Cart')
+        } catch (error) {
+    
+        }
+      }
+      const{name,images,price} = productDetail
 
-    const { cart, setCart, favorited, setFavorited } = useContext(AppContext)
+    // const { cart, setCart, favorited, setFavorited } = useContext(AppContext)
 
-    const addToCart = () => {
-        const cartItem = {
-            'id': product.id,
-            'name': product.name,
-            'price': product.price,
-            'image': product.image,
-            'quantity': 1,
-        }
-        const index = cart.findIndex(item => item.id == product.id)
-        if (index == -1) {
-            setCart([...cart, cartItem])
-        } else {
-            cart[index].quantity++
-            setCart([...cart])
-        }
-        ToastAndroid.show('Thêm sản phẩm thành công', ToastAndroid.LONG)
-    }
-    const checkFavorited = () => {
-        const index = favorited.findIndex(item => item.id == product.id)
-        if (index == -1) {
-            return false
-        }
-        return true
-    }
-    const addToFavorite = () => {
-        const index = favorited.findIndex(item => item.id == product.id)
-        if (index == -1) {
-            setFavorited([...favorited, product])
-        } else {
-            const newFavorite = [...favorited]
-            newFavorite.splice(index, 1)
-            setFavorited(newFavorite)
-        }
-    }
+    // const addToCart = () => {
+    //     const cartItem = {
+    //         'id': product.id,
+    //         'name': product.name,
+    //         'price': product.price,
+    //         'image': product.image,
+    //         'quantity': 1,
+    //     }
+    //     const index = cart.findIndex(item => item.id == product.id)
+    //     if (index == -1) {
+    //         setCart([...cart, cartItem])
+    //     } else {
+    //         cart[index].quantity++
+    //         setCart([...cart])
+    //     }
+    //     ToastAndroid.show('Thêm sản phẩm thành công', ToastAndroid.LONG)
+    // }
+    // const checkFavorited = () => {
+    //     const index = favorited.findIndex(item => item.id == product.id)
+    //     if (index == -1) {
+    //         return false
+    //     }
+    //     return true
+    // }
+    // const addToFavorite = () => {
+    //     const index = favorited.findIndex(item => item.id == product._id)
+    //     if (index == -1) {
+    //         setFavorited([...favorited, product])
+    //     } else {
+    //         const newFavorite = [...favorited]
+    //         newFavorite.splice(index, 1)
+    //         setFavorited(newFavorite)
+    //     }
+    // }
     return (
         <View style={styles.container} showsVerticalScrollIndicator={false}>
             <View style={styles.viewBackground}>
@@ -65,10 +106,10 @@ const ProductDetails = ({ navigation, route }) => {
                     <Image style={styles.imgBack} source={require('../assets/images/back.png')} />
                 </TouchableOpacity>
 
-                <TouchableOpacity style={styles.btnFavorite} onPress={addToFavorite}>
+                <TouchableOpacity style={styles.btnFavorite}>
                     {
-                        checkFavorited() ? <Image source={require('../assets/images/product_details/favorite.png')} /> :
-                            <Image source={require('../assets/images/product_details/heart_black.png')} />
+                        <Image source={require('../assets/images/product_details/favorite.png')} /> 
+                            // <Image source={require('../assets/images/product_details/heart_black.png')} />
                     }
                 </TouchableOpacity>
                 <Image style={styles.imgBackground} source={require('../assets/images/product_details/background.png')} />
@@ -77,29 +118,29 @@ const ProductDetails = ({ navigation, route }) => {
             <View style={styles.viewProduct}>
                 <View style={styles.viewInfor}>
                     {
-                        product.image && <Image style={styles.imgProduct} source={{ uri: product.image }} />
+                        images && <Image style={styles.imgProduct} source={{ uri: images[0] }} />
                     }
 
-                    <Text style={styles.txtName}>{product.name}</Text>
+                    <Text style={styles.txtName}>{name}</Text>
 
                     <View style={styles.viewSubInfo}>
                         <View style={styles.viewSubInforItem}>
                             <Image source={require('../assets/images/product_details/i_time.png')} />
-                            <Text style={styles.txtSubInfor}>{product.ship} min</Text>
+                            <Text style={styles.txtSubInfor}>50 min</Text>
                         </View>
 
                         <View style={[styles.viewSubInforItem, { marginHorizontal: 25 }]}>
                             <Image source={require('../assets/images/product_details/i_star.png')} />
-                            <Text style={styles.txtSubInfor}>{product.rate}</Text>
+                            <Text style={styles.txtSubInfor}>4.8</Text>
                         </View>
 
                         <View style={styles.viewSubInforItem}>
                             <Image source={require('../assets/images/product_details/i_fire.png')} />
-                            <Text style={styles.txtSubInfor}>{product.calo} cal</Text>
+                            <Text style={styles.txtSubInfor}>420 cal</Text>
                         </View>
                     </View>
 
-                    <Text style={styles.txtPrice}>${product.price}</Text>
+                    <Text style={styles.txtPrice}>${price}.00</Text>
                 </View>
 
                 <View style={styles.viewOther}>
@@ -153,7 +194,7 @@ const ProductDetails = ({ navigation, route }) => {
                         </View>
                     </View>
 
-                    <TouchableOpacity style={styles.btnAdd} onPress={addToCart}>
+                    <TouchableOpacity style={styles.btnAdd} onPress={addToCart} >
                         <Text style={styles.txtAdd}>Add 1 to cart </Text>
                     </TouchableOpacity>
                 </View>

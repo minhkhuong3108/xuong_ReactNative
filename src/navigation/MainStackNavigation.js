@@ -89,6 +89,7 @@ const AppTab = () => {
               resizeMode='contain'
             />
           ),
+          unmountOnBlur:true,
           tabBarButton: (props) => (
             <CustomTabBarButton {...props} />
           )

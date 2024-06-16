@@ -2,26 +2,54 @@ import { Image, Modal, StyleSheet, Text, ToastAndroid, TouchableOpacity, View } 
 import React, { useContext, useEffect, useState } from 'react'
 import { AppContext } from './AppContext'
 import moment from 'moment'
+import { useSelector, useDispatch } from 'react-redux'
+import { deleteAllOrder, getOrder } from './API/Order'
+import { addToCart } from './API/CartAPI'
 
 const Payment = ({ navigation }) => {
-    const { history, setHistory, cart, setCart } = useContext(AppContext)
+    // const { history, setHistory, cart, setCart } = useContext(AppContext)
     const [checked, setChecked] = useState(false)
     const [visible, setVisible] = useState(false)
     const closeModal = () => {
         setVisible(false)
     }
-    const callAPI = () => {
-        const currentDate = moment();
-        // Format ngày theo định dạng
-        const formattedDate = currentDate.format('DD/MM/YYYY HH:mm');
-        const body = {
-            'date': formattedDate,
-            'products': cart
+    // const callAPI = () => {
+    //     const currentDate = moment();
+    //     // Format ngày theo định dạng
+        // const formattedDate = currentDate.format('DD/MM/YYYY HH:mm');
+    //     const body = {
+    //         'date': formattedDate,
+    //         'products': cart
+    //     }
+    //     setHistory([...history, body])
+    //     setCart([])
+    //     ToastAndroid.show('Đặt hàng thành công', ToastAndroid.LONG)
+    //     navigation.navigate('TabHome')
+    // }
+
+    const { getOrderData } = useSelector(state => state.getOrder)
+    const { loginData } = useSelector(state => state.login)
+    const productOrder = getOrderData.map(item => item.product)
+    const dispatch = useDispatch()
+
+    const addCart = () => {
+        try {
+            const user = loginData._id
+            const products = []
+            for (let index = 0; index < productOrder.length; index++) {
+                const product = productOrder[index];
+                const item = { _id: product._id, quantity: product.quantity }
+                products.push(item)
+            }
+            dispatch(addToCart({ user, products }))
+            dispatch(deleteAllOrder(user))
+            // console.log("products: ",products);
+            ToastAndroid.show('Đặt hàng thành công', ToastAndroid.SHORT)
+            navigation.navigate('Home')
+
+        } catch (error) {
+            console.log(error);
         }
-        setHistory([...history, body])
-        setCart([])
-        ToastAndroid.show('Đặt hàng thành công', ToastAndroid.LONG)
-        navigation.navigate('TabHome')
     }
 
     const showModal = () => {
@@ -78,7 +106,7 @@ const Payment = ({ navigation }) => {
                             <TouchableOpacity style={styles.btnNoModal} onPress={closeModal}>
                                 <Text style={styles.txtModal}>No</Text>
                             </TouchableOpacity>
-                            <TouchableOpacity style={styles.btnYesModal} onPress={callAPI}>
+                            <TouchableOpacity style={styles.btnYesModal} onPress={addCart}>
                                 <Text style={styles.txtModal}>Yes</Text>
                             </TouchableOpacity>
                         </View>

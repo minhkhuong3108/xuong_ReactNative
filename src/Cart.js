@@ -1,47 +1,83 @@
 import { Alert, FlatList, Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
-import React, { useContext } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { AppContext } from './AppContext'
+import { useSelector, useDispatch } from 'react-redux'
+import { deleteAllOrder, getOrder } from './API/Order'
+import { addToCart } from './API/CartAPI'
 
 const Cart = ({ navigation }) => {
 
-    const { cart, setCart } = useContext(AppContext)
-    const totalPrice = cart.reduce((total, item) => {
+    const { loginData } = useSelector(state => state.login)
+    const { getOrderData, getOrderStatus } = useSelector(state => state.getOrder)
+    const dispatch = useDispatch()
+    const [cart, setCart] = useState([])
+    const user = loginData._id
+    const products = getOrderData.map(item => item.product)
+    const totalPrice = products.reduce((total, item) => {
         return total + item.price * item.quantity
     }, 0)
+
+    // const { cart, setCart } = useContext(AppContext)
+    // const totalPrice = cart.reduce((total, item) => {
+    //     return total + item.price * item.quantity
+    // }, 0)
+
+    useEffect(() => {
+        const getCart = async () => {
+            try {
+                dispatch(getOrder(user))
+            } catch (error) {
+                console.log(error);
+            }
+        }
+        getCart()
+    }, [])
+
+    useEffect(() => {
+        if (getOrderData.length > 0) {
+            setCart(getOrderData);
+        }
+        if (getOrderData.length === 0) {
+            setCart([]);
+        }
+    }, [getOrderData]);
+
+
     const renderItem = ({ item }) => {
-        const { id, name, price, image, quantity } = item
+        const{_id,user,product} = item
+        const {  name, price, images, quantity } = product
         const priceItem = price * quantity
         const onChangeQuantity = (type) => {
             const quantity = item.quantity + type
-            const index = cart.findIndex(cartItem => cartItem.id == id)
-            if (quantity <= 0) {
-                Alert.alert(
-                    'Thông báo',
-                    'Bạn có muốn xoá sản phẩm này khỏi giỏ hàng?',
-                    [
-                        {
-                            text: 'Cancel',
-                        },
-                        {
-                            text: 'OK',
-                            onPress: () => {
-                                cart.splice(index, 1)
-                                setCart([...cart])
-                            }
-                        }
-                    ],
-                    { cancelable: false }
-                )
-            } else {
-                cart[index].quantity = quantity
-                setCart([...cart])
-            }
+            // const index = cart.findIndex(cartItem => cartItem._id == _id)
+            // if (quantity <= 0) {
+            //     Alert.alert(
+            //         'Thông báo',
+            //         'Bạn có muốn xoá sản phẩm này khỏi giỏ hàng?',
+            //         [
+            //             {
+            //                 text: 'Cancel',
+            //             },
+            //             {
+            //                 text: 'OK',
+            //                 onPress: () => {
+            //                     cart.splice(index, 1)
+            //                     setCart([...cart])
+            //                 }
+            //             }
+            //         ],
+            //         { cancelable: false }
+            //     )
+            // } else {
+            //     cart[index].quantity = quantity
+            //     setCart([...cart])
+            // }
         }
         return (
             <View style={styles.viewContainer}>
                 <View style={styles.viewNoMarginRow}>
                     <Text style={styles.txtName}>{name}</Text>
-                    <Image style={styles.imgProduct} source={{ uri: image }} />
+                    {images&&<Image style={styles.imgProduct} source={{ uri: images[0] }} />}
                 </View>
 
                 <View style={styles.viewRow}>
@@ -73,7 +109,7 @@ const Cart = ({ navigation }) => {
                 showsVerticalScrollIndicator={false}
                 data={cart}
                 renderItem={renderItem}
-                keyExtractor={item => item.id}
+                keyExtractor={item => item._id}
             />
 
 

@@ -7,41 +7,72 @@ import { icons, } from '../constants';
 import { Alert } from 'react-native';
 import FoodooItem from './FoodooItem';
 import AxiosInstance from './helpers/AxiosInstance';
+import { useSelector, useDispatch } from 'react-redux'
+import { searchProduct } from './API/ProductAPI';
 
 
 function Search({ navigation }) {
-    const [hot, setHot] = useState([])
+    // const [hot, setHot] = useState([])
+    // useEffect(() => {
+    //   const getProduct = async () => {
+    //     try {
+    //       const response = await AxiosInstance().get('/hotSpot')
+    //       setHot(response)
+    //     } catch (error) {
+    //       console.log(error);
+    //     }
+    //   }
+    //   getProduct()
+    // },[])
+
+    const [product, setProduct] = useState([])
+    const [keyword, setKeyword] = useState('')
+    const dispatch = useDispatch()
+    const { data } = useSelector(state => state.searchProduct)
+
     useEffect(() => {
-      const getProduct = async () => {
-        try {
-          const response = await AxiosInstance().get('/hotSpot')
-          setHot(response)
-        } catch (error) {
-          console.log(error);
+        const searchProducts = () => {
+            try {
+                dispatch(searchProduct(keyword))
+
+            } catch (error) {
+                console.log(error);
+            }
         }
-      }
-      getProduct()
-    },[])
+        searchProducts()
+    }, [keyword])
+
+    useEffect(() => {
+        try {
+            setProduct(data)
+        } catch (error) {
+            console.log();
+        }
+    }, [data])
+
+    const search = () => {
+        setProduct(data)
+    }
     const backHome = () => {
         navigation.goBack()
     }
-    const renderItem= ({item})=>{
-        const {id,name,price, image} = item
-        return(
+    const renderItem = ({ item }) => {
+        const { _id, name, price, images } = item
+        return (
             <TouchableOpacity
-            onPress={()=>{navigation.navigate('ProductDetails',id)}}
-            style={styles.container}>
-            <View style={styles.Class3Item}>
-                <View style={styles.itemItem}>
-                    <Image source={{uri:image}}
-                        style={styles.imageItem} />
-                    <View style={styles.ClassChild}>
-                        <Text style={styles.nameItem}>{name}</Text>
-                        <Text style={styles.priceItem}> <Text style={styles.dollar}>$</Text> {price}</Text>
+                onPress={() => { navigation.navigate('ProductDetails', { id: _id }) }}
+                style={styles.container}>
+                <View style={styles.Class3Item}>
+                    <View style={styles.itemItem}>
+                        <Image source={{ uri: images[0] }}
+                            style={styles.imageItem} />
+                        <View style={styles.ClassChild}>
+                            <Text style={styles.nameItem}>{name}</Text>
+                            <Text style={styles.priceItem}> <Text style={styles.dollar}>$</Text> {price}.00</Text>
+                        </View>
                     </View>
                 </View>
-            </View>
-        </TouchableOpacity>
+            </TouchableOpacity>
         )
     }
     const [foods, setFoods] = useState([
@@ -71,9 +102,9 @@ function Search({ navigation }) {
     const [searchText, setSearchText] = useState('')
 
     // Hàm lọc dựa vào tên nhập vào TextInput để tìm sản phẩm , không phân biệt hoa thường
-    const filteredFoods = () =>
-        hot.filter(eachFood => eachFood.name.toLowerCase().
-            includes(searchText.toLowerCase()))
+    // const filteredFoods = () =>
+    //     hot.filter(eachFood => eachFood.name.toLowerCase().
+    //         includes(searchText.toLowerCase()))
 
     return (
         <View style={styles.container}>
@@ -87,43 +118,46 @@ function Search({ navigation }) {
                     style={styles.iconSearch}
                     source={require('../assets/images/home/search.png')} />
                 <TextInput
-                    autoCorrect={false}
+                    // autoCorrect={false}
+                    value={keyword}
                     onChangeText={(item) => {
-                        setSearchText(item);
-                        setUserStartedTyping(true); // Người dùng bắt đầu nhập liệu
+                        setKeyword(item);
+                        // setUserStartedTyping(true); // Người dùng bắt đầu nhập liệu
                     }}
-                    onFocus={() => {
-                        if (!userStartedTyping) {
-                            setSearchText(''); // Chỉ xóa nếu chưa có nhập liệu
-                            setUserStartedTyping(true); // Người dùng bắt đầu nhập liệu
-                        }
-                    }}
-                    onBlur={() => {
-                        if (searchText === '') {
-                            setUserStartedTyping(false);// nếu blur rồi không nhập gì thì set =>> false
-                        }
-                    }}
+                    // onFocus={() => {
+                    //     if (!userStartedTyping) {
+                    //         setSearchText(''); // Chỉ xóa nếu chưa có nhập liệu
+                    //         setUserStartedTyping(true); // Người dùng bắt đầu nhập liệu
+                    //     }
+                    // }}
+                    // onBlur={() => {
+                    //     if (searchText === '') {
+                    //         setUserStartedTyping(false);// nếu blur rồi không nhập gì thì set =>> false
+                    //     }
+                    // }}
 
                     style={styles.titleInput}>
-                    {userStartedTyping ? searchText : "Search Super Foodoo"}
+                    {/* {userStartedTyping ? searchText : "Search Super Foodoo"} */}
                 </TextInput>
-                <Image
-                    style={styles.iconMenu}
-                    source={icons.menu} />
+                <TouchableOpacity onPress={search}>
+                    <Image
+                        style={styles.iconMenu}
+                        source={icons.menu} />
+                </TouchableOpacity>
             </View>
 
             <View style={styles.Class3}>
-                
-                
-                    <FlatList
-                        data={filteredFoods()}
-                        numColumns={2} //phân thành 2 cột
-                        showsVerticalScrollIndicator={false}
-                        renderItem={renderItem}
-                    keyExtractor={eachFood => eachFood.name}
+
+
+                <FlatList
+                    data={product}
+                    numColumns={2} //phân thành 2 cột
+                    showsVerticalScrollIndicator={false}
+                    renderItem={renderItem}
+                    keyExtractor={item => item._id}
                     columnWrapperStyle={{ justifyContent: 'flex-end' }}
-                    /> 
-                
+                />
+
 
             </View>
 
@@ -135,12 +169,12 @@ export default Search
 const styles = StyleSheet.create({
     dollar: { color: '#FFC532' },
     ClassChild: {
-        alignItems: 'center', 
+        alignItems: 'center',
         marginTop: 70
     },
     imageItem: {
         width: 170,
-        height:113,
+        height: 113,
         position: 'absolute',
         bottom: 70,
         resizeMode: 'contain',
@@ -167,13 +201,13 @@ const styles = StyleSheet.create({
         shadowRadius: 4,
         elevation: 8,
         marginBottom: 20,
-        alignItems:'center'
+        alignItems: 'center'
     },
     Class3Item: {
         flexDirection: 'row',
         marginTop: 80,
         flex: 1,
-        alignItems:'center'
+        alignItems: 'center'
     },
     AleartsDoc: {
         color: 'black',
